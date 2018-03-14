@@ -85,5 +85,5 @@ Disable-experience-potions-when-booster-acive: false
    
 # You have completed configuring this plugin!
 # You should NOT touch the options below, as this will lead to problems / console spam.
-version: 0.6
+version: ${version}
 debug: false

@@ -4,7 +4,7 @@ description: Experience multiplication perk for Minecraft, SkillAPI and McMMO!
 author: TheBlockBender
 authors: [NonameSL]
 permission-message: You are not allowed to do this!
-version: 0.6
+version: ${version}
 softdepend: [SkillAPI, mcMMO, Jobs]
 
 commands:
