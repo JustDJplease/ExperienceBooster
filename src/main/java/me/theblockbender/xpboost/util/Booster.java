@@ -11,13 +11,12 @@ import me.theblockbender.xpboost.Main;
 public class Booster {
 
     private UUID owner;
-    private String name = "Unknown";
-    private Integer multiplier = 2;
+    private String name;
+    private Integer multiplier;
     private Long started_at;
-    private String word = "Double";
-    private Integer time = 600;
+    private Integer time;
     private Main main;
-    private BoosterType type = BoosterType.Minecraft;
+    private BoosterType type;
 
     public Booster(UUID uuid, Main main, BoosterType type, int multiplier) {
         this.main = main;
@@ -31,17 +30,8 @@ public class Booster {
         FileConfiguration config = main.getConfig();
         this.multiplier = multiplier;
         started_at = System.currentTimeMillis();
-        word = parseWord(multiplier);
         time = config.getInt("Boosters." + type.name() + ".time");
         this.type = type;
-    }
-
-    private String parseWord(int multi) {
-        FileConfiguration config = main.getConfig();
-        if (config.contains("Name-of-the-multiplier." + multi)) {
-            return config.getString("Name-of-the-multiplier." + multi);
-        }
-        return config.getString("Name-of-the-multiplier.other");
     }
 
     public String getPlayerName() {
@@ -49,13 +39,7 @@ public class Booster {
     }
 
     public Player getPlayer() {
-        Player player = Bukkit.getPlayer(owner);
-        return player;
-    }
-
-    public String getTimeLasting() {
-        Long timeLasting = time * 1000L;
-        return main.utilTime.translateTime(timeLasting);
+        return Bukkit.getPlayer(owner);
     }
 
     public String getTimeLeft() {
@@ -71,13 +55,9 @@ public class Booster {
         Long timeLasting = time * 1000L;
         Long timeLeft = (started_at + timeLasting) - System.currentTimeMillis();
         if (timeLeft <= 0) {
-            return 0l;
+            return 0L;
         }
         return timeLeft;
-    }
-
-    public String getMultiplierWord() {
-        return word;
     }
 
     public Integer getMultiplier() {

@@ -72,7 +72,7 @@ public class InventoryListener implements Listener {
                     player.sendMessage(main.getMessage("command-no-booster"));
                     return;
                 }
-                BoosterType booster = null;
+                BoosterType booster;
                 String name = ChatColor.stripColor(item.getItemMeta().getDisplayName()).replace("Activate a ", "").replace(" Experience Booster", "");
                 booster = main.getBoosterValue(name);
                 if(booster == null) {
@@ -96,7 +96,6 @@ public class InventoryListener implements Listener {
                 player.closeInventory();
                 return;
             default:
-                return;
         }
     }
 }

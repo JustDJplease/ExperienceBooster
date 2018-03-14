@@ -86,7 +86,6 @@ public class HologramListener implements Listener {
                 main.xpNotifiers.put(stand.getUniqueId(), System.currentTimeMillis() + 2000);
                 main.moveThese.put(stand, loc.clone().add(0, 10, 0));
             }
-            return;
         }
     }
 }

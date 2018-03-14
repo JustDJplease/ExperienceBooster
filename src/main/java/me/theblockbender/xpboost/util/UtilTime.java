@@ -8,56 +8,50 @@ import me.theblockbender.xpboost.Main;
 
 public class UtilTime {
 
-    Main main;
+    private Main main;
 
     public UtilTime(Main main) {
         this.main = main;
     }
 
     public String translateTime(long time) {
-        return convertString(time, 1, "FIT");
+        return convertString(time);
     }
 
-    public String convertString(long time, int trim, String type) {
+    private String convertString(long time) {
         if (time == -1)
             return "0.0 " + main.getMessage("time-second") + main.getMessage("time-multiple");
 
-        if (type == "FIT") {
-            if (time < 60000)
-                type = "SECONDS";
-            else if (time < 3600000)
-                type = "MINUTES";
-            else if (time < 86400000)
-                type = "HOURS";
-            else
-                type = "DAYS";
-        }
-
+        String type;
+        int  trim = 1;
+        if (time < 60000)
+            type = "SECONDS";
+        else if (time < 3600000)
+            type = "MINUTES";
+        else if (time < 86400000)
+            type = "HOURS";
+        else
+            type = "DAYS";
         String text;
         double num;
-        if (trim == 0) {
-            if (type == "DAYS")
+        switch (type) {
+            case "DAYS":
                 text = (num = trim(trim, time / 86400000d)) + " " + main.getMessage("time-day");
-            else if (type == "HOURS")
+                break;
+            case "HOURS":
                 text = (num = trim(trim, time / 3600000d)) + " " + main.getMessage("time-hour");
-            else if (type == "MINUTES")
+                break;
+            case "MINUTES":
                 text = (num = trim(trim, time / 60000d)) + " " + main.getMessage("time-minute");
-            else if (type == "SECONDS")
-                text = (int) (num = (int) trim(trim, time / 1000d)) + " " + main.getMessage("time-second");
-            else
-                text = (int) (num = (int) trim(trim, time)) + " " + main.getMessage("time-millisecond");
-        } else {
-            if (type == "DAYS")
-                text = (num = trim(trim, time / 86400000d)) + " " + main.getMessage("time-day");
-            else if (type == "HOURS")
-                text = (num = trim(trim, time / 3600000d)) + " " + main.getMessage("time-hour");
-            else if (type == "MINUTES")
-                text = (num = trim(trim, time / 60000d)) + " " + main.getMessage("time-minute");
-            else if (type == "SECONDS")
+                break;
+            case "SECONDS":
                 text = (num = trim(trim, time / 1000d)) + " " + main.getMessage("time-second");
-            else
+                break;
+            default:
                 text = (int) (num = (int) trim(0, time)) + " " + main.getMessage("time-millisecond");
+                break;
         }
+
 
         if (num != 1)
             text += main.getMessage("time-multiple");
@@ -68,14 +62,14 @@ public class UtilTime {
         return text;
     }
 
-    public double trim(int degree, double d) {
-        String format = "#.#";
+    private double trim(int degree, double d) {
+        StringBuilder format = new StringBuilder("#.#");
 
         for (int i = 1; i < degree; i++)
-            format += "#";
+            format.append("#");
 
         DecimalFormatSymbols symb = new DecimalFormatSymbols(Locale.US);
-        DecimalFormat twoDForm = new DecimalFormat(format, symb);
+        DecimalFormat twoDForm = new DecimalFormat(format.toString(), symb);
         return Double.valueOf(twoDForm.format(d));
     }
 }

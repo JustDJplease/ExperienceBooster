@@ -86,7 +86,7 @@ public class BoosterGUI {
                     .toItemStack());
             nextFreeSlot++;
         }
-        // TODO add item here
+        // Future add item here
         if (main.isBoosterEnabled(BoosterType.Jobs)) {
             List<String> lore = main.getGuiLore("gui-booster.lore");
             for (int i = 0; i < lore.size(); i++) {

@@ -60,13 +60,13 @@ public class BoosterCommand implements CommandExecutor {
         if (args[2].equalsIgnoreCase("mcmmo")) {
             type = BoosterType.McMMO;
         }
-        // TODO add argument-type here
+        // Future add argument-type here
         if (args[2].equalsIgnoreCase("jobs")) {
             type = BoosterType.Jobs;
         }
         if (type == null) {
             sender.sendMessage(main.getMessage("command-invalid-type"));
-            // TODO add type here
+            // Future add type here
             sender.sendMessage(main.getMessage("command-available-types"));
             return true;
         }
@@ -81,14 +81,7 @@ public class BoosterCommand implements CommandExecutor {
                     sender.sendMessage(main.getMessage("command-no-permission"));
                     return true;
                 }
-                int time = 600;
-                try {
-                    time = Integer.parseInt(args[1]);
-                } catch (NumberFormatException ex) {
-                    sender.sendMessage(main.getMessage("command-invalid-duration").replace("{time}", args[1]));
-                    return true;
-                }
-                main.cmdActivate((Player) sender, type, time);
+                main.cmdActivate((Player) sender, type);
                 return true;
             }
             if (subcommand.contains("give")) {
@@ -118,7 +111,7 @@ public class BoosterCommand implements CommandExecutor {
             sendHelp(sender, label);
             return true;
         }
-        int amount = 1;
+        int amount;
         try {
             amount = Integer.parseInt(args[3]);
         } catch (NumberFormatException ex) {
@@ -129,24 +122,20 @@ public class BoosterCommand implements CommandExecutor {
             sender.sendMessage(main.getMessage("command-number-to-weird"));
             return true;
         }
-        if (args.length == 4) {
-            if (subcommand.contains("give")) {
-                if (!sender.hasPermission("xpboost.admin")) {
-                    sender.sendMessage(main.getMessage("command-no-permission"));
-                    return true;
-                }
-                main.addBooster(player, amount, sender, type);
+        if (subcommand.contains("give")) {
+            if (!sender.hasPermission("xpboost.admin")) {
+                sender.sendMessage(main.getMessage("command-no-permission"));
                 return true;
             }
-            if (subcommand.contains("take")) {
-                if (!sender.hasPermission("xpboost.admin")) {
-                    sender.sendMessage(main.getMessage("command-no-permission"));
-                    return true;
-                }
-                main.takeBooster(player, amount, sender, type);
+            main.addBooster(player, amount, sender, type);
+            return true;
+        }
+        if (subcommand.contains("take")) {
+            if (!sender.hasPermission("xpboost.admin")) {
+                sender.sendMessage(main.getMessage("command-no-permission"));
                 return true;
             }
-            sendHelp(sender, label);
+            main.takeBooster(player, amount, sender, type);
             return true;
         }
         sendHelp(sender, label);

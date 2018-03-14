@@ -47,21 +47,20 @@ public class Main extends JavaPlugin implements Listener {
 
     public BoosterGUI boostergui;
     public UtilTime utilTime = new UtilTime(this);
-    public List<UUID> openInventories = new ArrayList<UUID>();
-    public Map<UUID, Long> clickCooldown = new HashMap<UUID, Long>();
-    public Map<UUID, Long> xpNotifiers = new HashMap<UUID, Long>();
-    File storagef;
+    public List<UUID> openInventories = new ArrayList<>();
+    public Map<UUID, Long> clickCooldown = new HashMap<>();
+    public Map<UUID, Long> xpNotifiers = new HashMap<>();
+    private File storagef;
     private FileConfiguration storage;
-    File messagesf;
     private FileConfiguration messages;
     private BossBar bar_minecraft = null;
     private BossBar bar_skillapi = null;
     private BossBar bar_mcmmo = null;
-    // TODO add bar here.
+    // Future add bar here.
     private BossBar bar_jobs = null;
-    public List<Booster> activeBoosters = new ArrayList<Booster>();
-    public Map<String, BoosterType> preloadedTypes = new HashMap<String, BoosterType>();
-    public Map<ArmorStand, Location> moveThese = new HashMap<ArmorStand, Location>();
+    private List<Booster> activeBoosters = new ArrayList<>();
+    private Map<String, BoosterType> preloadedTypes = new HashMap<>();
+    public Map<ArmorStand, Location> moveThese = new HashMap<>();
 
     public void onEnable() {
         saveDefaultConfig();
@@ -108,7 +107,7 @@ public class Main extends JavaPlugin implements Listener {
                 getLogger().warning("You cannot enable 'McMMO' multiplication if you do not have 'McMMO' installed!");
             }
         }
-        // TODO Add enabled check here
+        // Future Add enabled check here
         if (isBoosterEnabled(BoosterType.Jobs)) {
             Plugin skill = pm.getPlugin("Jobs");
             if (skill != null) {
@@ -120,172 +119,155 @@ public class Main extends JavaPlugin implements Listener {
         }
         getCommand("xpboost").setExecutor(new BoosterCommand(this));
         boostergui = new BoosterGUI(this);
-        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
 
-            @Override
-            public void run() {
-                // Clear inventory cooldown list, incase someone disapears.
-                Iterator<Entry<UUID, Long>> it = clickCooldown.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry<UUID, Long> pair = it.next();
-                    if (System.currentTimeMillis() > pair.getValue()) {
-                        it.remove();
-                    }
-                }
-            }
-
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            // Clear inventory cooldown list, incase someone disapears.
+            clickCooldown.entrySet().removeIf(pair -> System.currentTimeMillis() > pair.getValue());
         }, 60 * 20L, 60 * 20L);
-        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
 
-            @Override
-            public void run() {
-                FileConfiguration config = getConfig();
-                // Minecraft
-                if (isBoosted(BoosterType.Minecraft)) {
-                    if (bar_minecraft == null) {
-                        bar_minecraft = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.Minecraft.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
-                                        .replace("{time}", getTimeLeft(BoosterType.Minecraft))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))),
-                                BarColor.valueOf(config.getString("Boosters.Minecraft.bossbar-color").toUpperCase()),
-                                BarStyle.SOLID);
-                    }
-                    try {
-                        bar_minecraft.setTitle(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.Minecraft.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
-                                        .replace("{time}", getTimeLeft(BoosterType.Minecraft))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))));
-                        for (Player online : Bukkit.getOnlinePlayers()) {
-                            if (!bar_minecraft.getPlayers().contains(online)) {
-                                bar_minecraft.addPlayer(online);
-                            }
-                        }
-                    } catch (NullPointerException ex) {
-                        debug("Bar task created a NPE (Minecraft). It was silenced.");
-                    }
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            FileConfiguration config = getConfig();
+            // Minecraft
+            if (isBoosted(BoosterType.Minecraft)) {
+                if (bar_minecraft == null) {
+                    bar_minecraft = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.Minecraft.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
+                                    .replace("{time}", getTimeLeft(BoosterType.Minecraft))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))),
+                            BarColor.valueOf(config.getString("Boosters.Minecraft.bossbar-color").toUpperCase()),
+                            BarStyle.SOLID);
                 }
-                // SkillAPI
-                if (isBoosted(BoosterType.SkillAPI)) {
-                    if (bar_skillapi == null) {
-                        bar_skillapi = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.SkillAPI.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.SkillAPI))
-                                        .replace("{time}", getTimeLeft(BoosterType.SkillAPI))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.SkillAPI))),
-                                BarColor.valueOf(config.getString("Boosters.SkillAPI.bossbar-color").toUpperCase()),
-                                BarStyle.SOLID);
-                    }
-                    try {
-                        bar_skillapi.setTitle(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.SkillAPI.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.SkillAPI))
-                                        .replace("{time}", getTimeLeft(BoosterType.SkillAPI))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.SkillAPI))));
-                        for (Player online : Bukkit.getOnlinePlayers()) {
-                            if (!bar_skillapi.getPlayers().contains(online)) {
-                                bar_skillapi.addPlayer(online);
-                            }
+                try {
+                    bar_minecraft.setTitle(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.Minecraft.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
+                                    .replace("{time}", getTimeLeft(BoosterType.Minecraft))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))));
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        if (!bar_minecraft.getPlayers().contains(online)) {
+                            bar_minecraft.addPlayer(online);
                         }
-                    } catch (NullPointerException ex) {
-                        debug("Bar task created a NPE (SkillAPI). It was silenced.");
                     }
-                }
-                // McMMO
-                if (isBoosted(BoosterType.McMMO)) {
-                    if (bar_mcmmo == null) {
-                        bar_mcmmo = Bukkit.createBossBar(
-                                ChatColor.translateAlternateColorCodes('&',
-                                        config.getString("Boosters.McMMO.bossbar-message")
-                                                .replace("{player}", getWhoIsBoosting(BoosterType.McMMO))
-                                                .replace("{time}", getTimeLeft(BoosterType.McMMO))
-                                                .replace("{current-multiplier}", getMultiplierName(BoosterType.McMMO))),
-                                BarColor.valueOf(config.getString("Boosters.McMMO.bossbar-color").toUpperCase()),
-                                BarStyle.SOLID);
-                    }
-                    try {
-                        bar_mcmmo.setTitle(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.McMMO.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.McMMO))
-                                        .replace("{time}", getTimeLeft(BoosterType.McMMO))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.McMMO))));
-                        for (Player online : Bukkit.getOnlinePlayers()) {
-                            if (!bar_mcmmo.getPlayers().contains(online)) {
-                                bar_mcmmo.addPlayer(online);
-                            }
-                        }
-                    } catch (NullPointerException ex) {
-                        debug("Bar task created a NPE (McMMO). It was silenced.");
-                    }
-                }
-                // TODO add bar task here.
-                // Jobs
-                if (isBoosted(BoosterType.Jobs)) {
-                    if (bar_jobs == null) {
-                        bar_jobs = Bukkit.createBossBar(
-                                ChatColor.translateAlternateColorCodes('&',
-                                        config.getString("Boosters.Jobs.bossbar-message")
-                                                .replace("{player}", getWhoIsBoosting(BoosterType.Jobs))
-                                                .replace("{time}", getTimeLeft(BoosterType.Jobs))
-                                                .replace("{current-multiplier}", getMultiplierName(BoosterType.Jobs))),
-                                BarColor.valueOf(config.getString("Boosters.Jobs.bossbar-color").toUpperCase()),
-                                BarStyle.SOLID);
-                    }
-                    try {
-                        bar_jobs.setTitle(ChatColor.translateAlternateColorCodes('&',
-                                config.getString("Boosters.Jobs.bossbar-message")
-                                        .replace("{player}", getWhoIsBoosting(BoosterType.Jobs))
-                                        .replace("{time}", getTimeLeft(BoosterType.Jobs))
-                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.Jobs))));
-                        for (Player online : Bukkit.getOnlinePlayers()) {
-                            if (!bar_jobs.getPlayers().contains(online)) {
-                                bar_jobs.addPlayer(online);
-                            }
-                        }
-                    } catch (NullPointerException ex) {
-                        debug("Bar task created a NPE (Jobs). It was silenced.");
-                    }
-                }
-                // Despawn hologram task
-                Iterator<Entry<UUID, Long>> it = xpNotifiers.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry<UUID, Long> pair = it.next();
-                    if (System.currentTimeMillis() > pair.getValue()) {
-                        Entity e = Bukkit.getEntity(pair.getKey());
-                        if (e != null) {
-                            e.remove();
-                        }
-                        it.remove();
-                    }
+                } catch (NullPointerException ex) {
+                    debug("Bar task created a NPE (Minecraft). It was silenced.");
                 }
             }
-
-        }, 20L, 20L);
-        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-
-            @Override
-            public void run() {
-                // Hhologram move task
-                Iterator<Entry<ArmorStand, Location>> move = moveThese.entrySet().iterator();
-                while (move.hasNext()) {
-                    Entry<ArmorStand, Location> pair = move.next();
-                    ArmorStand ast = pair.getKey();
-                    Location loc = pair.getValue();
-                    if (ast == null) {
-                        move.remove();
-                    } else {
-                        ast.teleport(loc);
-                        move.remove();
+            // SkillAPI
+            if (isBoosted(BoosterType.SkillAPI)) {
+                if (bar_skillapi == null) {
+                    bar_skillapi = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.SkillAPI.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.SkillAPI))
+                                    .replace("{time}", getTimeLeft(BoosterType.SkillAPI))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.SkillAPI))),
+                            BarColor.valueOf(config.getString("Boosters.SkillAPI.bossbar-color").toUpperCase()),
+                            BarStyle.SOLID);
+                }
+                try {
+                    bar_skillapi.setTitle(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.SkillAPI.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.SkillAPI))
+                                    .replace("{time}", getTimeLeft(BoosterType.SkillAPI))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.SkillAPI))));
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        if (!bar_skillapi.getPlayers().contains(online)) {
+                            bar_skillapi.addPlayer(online);
+                        }
                     }
+                } catch (NullPointerException ex) {
+                    debug("Bar task created a NPE (SkillAPI). It was silenced.");
+                }
+            }
+            // McMMO
+            if (isBoosted(BoosterType.McMMO)) {
+                if (bar_mcmmo == null) {
+                    bar_mcmmo = Bukkit.createBossBar(
+                            ChatColor.translateAlternateColorCodes('&',
+                                    config.getString("Boosters.McMMO.bossbar-message")
+                                            .replace("{player}", getWhoIsBoosting(BoosterType.McMMO))
+                                            .replace("{time}", getTimeLeft(BoosterType.McMMO))
+                                            .replace("{current-multiplier}", getMultiplierName(BoosterType.McMMO))),
+                            BarColor.valueOf(config.getString("Boosters.McMMO.bossbar-color").toUpperCase()),
+                            BarStyle.SOLID);
+                }
+                try {
+                    bar_mcmmo.setTitle(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.McMMO.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.McMMO))
+                                    .replace("{time}", getTimeLeft(BoosterType.McMMO))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.McMMO))));
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        if (!bar_mcmmo.getPlayers().contains(online)) {
+                            bar_mcmmo.addPlayer(online);
+                        }
+                    }
+                } catch (NullPointerException ex) {
+                    debug("Bar task created a NPE (McMMO). It was silenced.");
+                }
+            }
+            // Future add bar task here.
+            // Jobs
+            if (isBoosted(BoosterType.Jobs)) {
+                if (bar_jobs == null) {
+                    bar_jobs = Bukkit.createBossBar(
+                            ChatColor.translateAlternateColorCodes('&',
+                                    config.getString("Boosters.Jobs.bossbar-message")
+                                            .replace("{player}", getWhoIsBoosting(BoosterType.Jobs))
+                                            .replace("{time}", getTimeLeft(BoosterType.Jobs))
+                                            .replace("{current-multiplier}", getMultiplierName(BoosterType.Jobs))),
+                            BarColor.valueOf(config.getString("Boosters.Jobs.bossbar-color").toUpperCase()),
+                            BarStyle.SOLID);
+                }
+                try {
+                    bar_jobs.setTitle(ChatColor.translateAlternateColorCodes('&',
+                            config.getString("Boosters.Jobs.bossbar-message")
+                                    .replace("{player}", getWhoIsBoosting(BoosterType.Jobs))
+                                    .replace("{time}", getTimeLeft(BoosterType.Jobs))
+                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.Jobs))));
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        if (!bar_jobs.getPlayers().contains(online)) {
+                            bar_jobs.addPlayer(online);
+                        }
+                    }
+                } catch (NullPointerException ex) {
+                    debug("Bar task created a NPE (Jobs). It was silenced.");
+                }
+            }
+            // Despawn hologram task
+            Iterator<Entry<UUID, Long>> it = xpNotifiers.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<UUID, Long> pair = it.next();
+                if (System.currentTimeMillis() > pair.getValue()) {
+                    Entity e = Bukkit.getEntity(pair.getKey());
+                    if (e != null) {
+                        e.remove();
+                    }
+                    it.remove();
+                }
+            }
+        }, 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            // Hhologram move task
+            Iterator<Entry<ArmorStand, Location>> move = moveThese.entrySet().iterator();
+            while (move.hasNext()) {
+                Entry<ArmorStand, Location> pair = move.next();
+                ArmorStand ast = pair.getKey();
+                Location loc = pair.getValue();
+                if (ast == null) {
+                    move.remove();
+                } else {
+                    ast.teleport(loc);
+                    move.remove();
                 }
             }
         }, 2L, 2L);
+
         // Lazy solution:
         preloadedTypes.put(getConfig().getString("Boosters.Minecraft.type"), BoosterType.Minecraft);
         preloadedTypes.put(getConfig().getString("Boosters.SkillAPI.type"), BoosterType.SkillAPI);
         preloadedTypes.put(getConfig().getString("Boosters.McMMO.type"), BoosterType.McMMO);
-        // TODO add preloader here
+        // Future add preloader here
         preloadedTypes.put(getConfig().getString("Boosters.Jobs.type"), BoosterType.Jobs);
     }
 
@@ -314,7 +296,7 @@ public class Main extends JavaPlugin implements Listener {
             bar_mcmmo.removeAll();
             bar_mcmmo = null;
         }
-        // TODO add cleaning task here
+        // Future add cleaning task here
         if (bar_jobs != null) {
             bar_jobs.removeAll();
             bar_jobs = null;
@@ -331,9 +313,10 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createFiles() {
         storagef = new File(getDataFolder(), "playerdata.yml");
-        messagesf = new File(getDataFolder(), "language.yml");
+        File messagesf = new File(getDataFolder(), "language.yml");
         if (!storagef.exists()) {
             storagef.getParentFile().mkdirs();
             saveResource("playerdata.yml", false);
@@ -346,16 +329,12 @@ public class Main extends JavaPlugin implements Listener {
         messages = new YamlConfiguration();
         try {
             storage.load(storagef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
         try {
             messages.load(messagesf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -381,14 +360,12 @@ public class Main extends JavaPlugin implements Listener {
                     bar_skillapi.removeAll();
                     bar_skillapi = null;
                     return;
-                // TODO Add type here
+                // Future Add type here
                 case Jobs:
                     bar_jobs.removeAll();
                     bar_jobs = null;
-                    return;
             }
         }
-        booster = null;
     }
 
     public void addBooster(Player giveTo, int a, CommandSender cmd, BoosterType type) {
@@ -488,10 +465,10 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
-    public void cmdActivate(Player sender, BoosterType type, int time) {
+    public void cmdActivate(Player sender, BoosterType type) {
         String boostername = getConfig().getString("Boosters." + type.name() + ".type");
         int multi = getConfig().getInt("Boosters." + type.name() + ".multiplier");
-        if (isBoosted(type) && !isBoosterStackable(type)) {
+        if (isBoosted(type) && isBoosterNotStackable(type)) {
             sender.sendMessage(getMessage("command-booster-active"));
             return;
         }
@@ -516,7 +493,7 @@ public class Main extends JavaPlugin implements Listener {
     public void tryActivateBooster(Player activator, BoosterType type) {
         String boostername = getConfig().getString("Boosters." + type.name() + ".type");
         int multi = getConfig().getInt("Boosters." + type.name() + ".multiplier");
-        if (isBoosted(type) && !isBoosterStackable(type)) {
+        if (isBoosted(type) && isBoosterNotStackable(type)) {
             activator.sendMessage(getMessage("command-booster-active"));
             return;
         }
@@ -560,10 +537,10 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
-    public boolean isPlayerAlreadyUsingThisBooster(BoosterType type, String name) {
+    private boolean isPlayerAlreadyUsingThisBooster(BoosterType type, String name) {
         for (Booster b : activeBoosters) {
             if (b.getType() == type) {
-                if (b.getPlayerName() == name) {
+                if (b.getPlayerName().equals(name)) {
                     return true;
                 }
             }
@@ -571,16 +548,13 @@ public class Main extends JavaPlugin implements Listener {
         return false;
     }
 
-    public boolean isBoosterMaxed(BoosterType type, int multi) {
+    private boolean isBoosterMaxed(BoosterType type, int multi) {
         int max = getConfig().getInt("Boosters." + type.name() + ".max-active-multiplier");
-        if ((getMultiplier(type) + multi) > max) {
-            return true;
-        }
-        return false;
+        return (getMultiplier(type) + multi) > max;
     }
 
-    public boolean isBoosterStackable(BoosterType type) {
-        return getConfig().getBoolean("Boosters." + type.name() + ".canStack");
+    private boolean isBoosterNotStackable(BoosterType type) {
+        return !getConfig().getBoolean("Boosters." + type.name() + ".canStack");
     }
 
     public Integer getBoosterAmount(Player player, BoosterType type) {
@@ -623,7 +597,7 @@ public class Main extends JavaPlugin implements Listener {
         return false;
     }
 
-    public String getWhoIsBoosting(BoosterType type) {
+    private String getWhoIsBoosting(BoosterType type) {
         String name = getMessage("server");
         for (Booster b : activeBoosters) {
             if (b.getType() == type) {
@@ -646,9 +620,9 @@ public class Main extends JavaPlugin implements Listener {
         return config.getString("Name-of-the-multiplier.other");
     }
 
-    public String getTimeLeft(BoosterType type) {
+    private String getTimeLeft(BoosterType type) {
         Booster firstOneToRunOut = null;
-        Long time = 1000l * getConfig().getInt("Boosters." + type.name() + ".time");
+        Long time = 1000L * getConfig().getInt("Boosters." + type.name() + ".time");
         for (Booster b : activeBoosters) {
             if (b.getType() == type) {
                 if (b.getRawTimeLeft() < time) {
@@ -730,7 +704,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     public List<String> getGuiLore(String path) {
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
         if (!messages.contains(path)) {
             lore.add("§7Invalid lore from " + path);
             debug("Messages file does not contain item lore: " + path);

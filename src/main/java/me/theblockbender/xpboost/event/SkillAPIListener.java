@@ -17,7 +17,7 @@ import me.theblockbender.xpboost.util.BoosterType;
 public class SkillAPIListener implements Listener {
 
     private Main main;
-    private List<UUID> skip = new ArrayList<UUID>();
+    private List<UUID> skip = new ArrayList<>();
 
     public SkillAPIListener(Main main) {
         this.main = main;
