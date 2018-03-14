@@ -44,6 +44,27 @@
             <version>2.2.7-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.gamingmesh</groupId>
+            <artifactId>jobs</artifactId>
+            <version>4.3.1</version>
+            <scope>provided</scope>
+            <systemPath>${project.basedir}/src/main/resources/Jobs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail</groupId>
+            <artifactId>nossr50</artifactId>
+            <version>1.5.09-SNAPSHOT</version>
+            <scope>provided</scope>
+            <systemPath>${project.basedir}/src/main/resources/mcMMO.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sucy</groupId>
+            <artifactId>skill</artifactId>
+            <version>3.103</version>
+            <scope>provided</scope>
+            <systemPath>${project.basedir}/src/main/resources/SkillAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
