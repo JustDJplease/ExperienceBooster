@@ -1,0 +1,145 @@
+#------------------------------------------------------------------------------------------------
+# EXPERIENCE BOOSTER - BOOST THE EXPERIENCE GOTTEN BY DIFFERENT PLUGINS!
+# Changes here will change the appearance of this plug-in in-game.
+#
+# NOTE: Commented messages specifying 'placeholders' apply for the message below the comment.
+# Not every message will support these placeholders. Only the string below!
+#------------------------------------------------------------------------------------------------
+
+#Several messages displayed when a booster is activated, ends etc.
+# Placeholders: {player} - player name, {type} - booster type.
+booster-activated: "&b{player} &3has just activated a &b{type} Experience Booster&3!"
+# Placeholders: {player} - player name, {type} - booster type.
+booster-ended: "&b{player}'s &3{type} booster has expired! Purchase your own at &bshop.your-server.com"
+# Placeholders: {amount} - amount received, {type} - booster type, {s} - trailing 's' if the amount is more than 1.
+booster-receive: "&3You have received &7[&f{amount}&7] &b{type} Experience Booster{s}&3!"
+
+# Various responses that appear when a command is run.
+command-no-permission: "&4Error: &cYou do not have permission!"
+command-from-console: "&4Error: &cThis action can only be performed by a player!"
+# Placeholders: {player} - player name specified in the command.
+command-player-not-online: "&4Error: &cThe player {player} is not online!"
+command-invalid-type: "&4Error: &cThat booster type does not exist!"
+command-available-types: "&4Available types: [&cMinecraft&4,&c SkillAPI&4, &cmcMMO&4,&c Jobs&4]"
+# Placeholders: {time} - duration specified in the command.
+command-invalid-duration: "&4Error:&c {time} is not a valid duration!"
+# Placeholders: {amount} - amount specified in the command.
+command-invalid-amount: "&4Error:&c {amount} is not a valid amount!"
+command-number-to-weird: "&4Error: &cPlease choose a realistic number; between &41&c and &4100&c!"
+# Placeholders: {player} - player name, {amount} - amount, {type} - booster type.
+command-give: "&2You have given &a{player} {amount} &2{type} Experience Booster{s}&2."
+# Placeholders: {player} - player name, {amount} - amount, {type} - booster type.
+command-take: "&2You have taken &a{amount} &2{type} Experience Booster{s} &2 from &a{player}&2."
+# Placeholders: {amount} - amount
+command-current-amount: "&2They now have &a{amount} &2of these."
+# Placeholders: {player} - player name, {type} - booster type.
+command-reset: "&2You have taken &aall &2{type} Experience Boosters &2 from &a{player}&2."
+# Placeholders: {player} - player name, {type} - booster type.
+command-error-no-boosters: "&4Error: &c{player} does not have any {type} Experience Boosters!"
+command-error-save: "&4Error: &cFailed to save booster data. Please report this to an administrator!"
+command-booster-active: "&4Error: &cThere can only be one of these boosters active at a time!"
+command-booster-this-type-active: "&4Error: &cYou already activated a booster of this type!"
+command-booster-maxed: "&4Error: &cYou cannot activate this booster, as it would increase the multiplier beyond its maximum!"
+command-no-booster: "&4Error:&c You do not have this Experience Booster. You can purchase one from &4shop.your-server.com"
+
+# The help menu that is displayed in chat when an unknown command is run.
+# Placeholders: {cmd} - the alias of the command used by the player.
+help-divider: "&8&m--------[&b&lExperience &3&lBooster+&8&m]--------"
+help-header: "&f&lExperience Booster Commands:"
+help-gui: "&b/{cmd} &8: &7Open up the booster menu."
+help-give: "&b/{cmd} &3give <player> <type> [amount] &8: &7Give a booster."
+help take: "&b/{cmd} &3take <player> <type> [amount] &8: &7Take a booster."
+help-reset: "&b/{cmd} &3reset <player> <type> &8: &7Take all boosters."
+help-reload: "&b/{cmd} &3reload &8: &7Reload the configuration files."
+help-start-booster: "&a/{cmd} &3boost <duration> <type> &8: &7Manually start a booster!"
+
+# Several messages displayed on certain events.
+event-xpbottle-disabled: "&cYou cannot use experience potions whilst a booster is active!"
+event-wrong-inventory: "&cClose this menu to interact with your inventory."
+event-no-boosters: "&4Error: &cYou do not have any boosters. You can purchase boosters on &4shop.your-server.com"
+event-bugreport: "&4Error:&c Something went wrong! Please report this to an administrator."
+event-plugin-disabled: "&4Error:&c The server has just disabled this plugin."
+event-force-close-inventory: "&cTherefore, you have left the inventory menu."
+
+# The message displayed in chat when a player clicks the 'purchase' option in the GUI.
+store-divider: "&8&m--------[&b&lExperience &3&lBooster+&8&m]--------"
+store-url: "   &b&lStore link: &3shop.your-server.com"
+store-info: "   &7Click the URL in the chat to open up the store!"
+
+# Some words that can appear on the boss bar:
+server: "The Server"
+multiple-players: "Multiple Players"
+not-active: "Not Active"
+unknown: "Unknown"
+
+time-day: "Day"
+time-hour: "Hour"
+time-minute: "Minute"
+time-second: "Second"
+time-millisecond: "Millisecond"
+# Will be added to the time word if the number is something other than 1.
+# E.g. 10 second will become 10 seconds
+# E.g. 1 minute will stay 1 minute.
+time-multiple: "s"
+
+# The words that replace the placeholder {current-multiplier}.
+# You can add any full number here to extend this list. No decimal numbers.
+# If a stacked multiplier is active, and the multiplier is not in this list, 'other' will be displayed.
+Name-of-the-multiplier:
+   2: "Double"
+   3: "Triple"
+   4: "Quadruple"
+   5: "Quintuple"
+   6: "Sextuple"
+   7: "Septuple"
+   8: "Octuple"
+   9: "Nonuple"
+   10: "Decuple"
+   other: "Mega"
+
+# Modify the in-game /booster GUI here:
+gui-title: "Experience Boosters"
+gui-spacer:
+   material: STAINED_GLASS_PANE
+   data: 7
+   amount: 1
+   glow: true
+gui-exit:
+   material: BARRIER
+   data: 0
+   amount: 1
+   name: "&c&lExit this menu"
+   lore:
+   - '&7Click to close this menu.'
+   glow: false
+gui-booster:
+   material: EXP_BOTTLE
+   data: 0
+   amount: 1
+   # Placeholders: {type} - booster type.
+   name: "&b&lActivate a &3&l{type} &b&lExperience Booster"
+   # Placeholders: {duration} - time lasting, {multiplier} multiplier, {amount} amount owned by the player, {s} if amount is more than 1.
+   lore:
+   - '&7Activates a global experience boost.'
+   - ' '
+   - '&bDetails:'
+   - '&b» &7Duration: &f{duration}'
+   - '&b» &7Multiplier: &7{multiplier}x'
+   - '&b» &7You have: &f{amount} booster{s}'
+   - ' '
+   - '&8Click to activate this booster.'
+   glow: false
+gui-shop:
+   material: CHEST
+   data: 0
+   amount: 1
+   name: "&b&lPurchase Experience Boosters"
+   lore:
+   - '&7Visit our store at &bshop.your-server.com'
+   - '&7and purchase boosters to use ingame!'
+   - ' '
+   - '&8Click to show the store URL in chat.'
+   glow: false
+
+# You should NOT touch the options below, as this WILL lead to problems.
+version: 0.6

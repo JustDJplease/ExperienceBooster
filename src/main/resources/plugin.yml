@@ -1,0 +1,13 @@
+name: ExperienceBoost
+main: me.theblockbender.xpboost.Main
+description: Experience multiplication perk for Minecraft, SkillAPI and McMMO!
+author: TheBlockBender
+authors: [NonameSL]
+permission-message: You are not allowed to do this!
+version: 0.6
+softdepend: [SkillAPI, mcMMO, Jobs]
+
+commands:
+  xpboost:
+    description: Show your experience boosters!
+    aliases: [expboost, xpperk, expperk]
