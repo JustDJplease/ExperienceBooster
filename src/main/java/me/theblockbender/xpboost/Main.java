@@ -1,17 +1,15 @@
 package me.theblockbender.xpboost;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import me.theblockbender.xpboost.command.BoosterCommand;
+import me.theblockbender.xpboost.event.*;
+import me.theblockbender.xpboost.inventory.BoosterGUI;
+import me.theblockbender.xpboost.util.Booster;
+import me.theblockbender.xpboost.util.BoosterType;
+import me.theblockbender.xpboost.util.UtilTime;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
@@ -21,27 +19,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.theblockbender.xpboost.command.BoosterCommand;
-import me.theblockbender.xpboost.event.BottleListener;
-import me.theblockbender.xpboost.event.ExperienceListener;
-import me.theblockbender.xpboost.event.HologramListener;
-import me.theblockbender.xpboost.event.InventoryListener;
-import me.theblockbender.xpboost.event.JobsListener;
-import me.theblockbender.xpboost.event.mcMMOListener;
-import me.theblockbender.xpboost.event.SkillAPIListener;
-import me.theblockbender.xpboost.inventory.BoosterGUI;
-import me.theblockbender.xpboost.util.Booster;
-import me.theblockbender.xpboost.util.BoosterType;
-import me.theblockbender.xpboost.util.UtilTime;
-import net.md_5.bungee.api.ChatColor;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -49,7 +35,6 @@ public class Main extends JavaPlugin implements Listener {
     public UtilTime utilTime = new UtilTime(this);
     public List<UUID> openInventories = new ArrayList<>();
     public Map<UUID, Long> clickCooldown = new HashMap<>();
-    public Map<UUID, Long> xpNotifiers = new HashMap<>();
     private File storagef;
     private FileConfiguration storage;
     private FileConfiguration messages;
@@ -60,26 +45,30 @@ public class Main extends JavaPlugin implements Listener {
     private BossBar bar_jobs = null;
     private List<Booster> activeBoosters = new ArrayList<>();
     private Map<String, BoosterType> preloadedTypes = new HashMap<>();
-    public Map<ArmorStand, Location> moveThese = new HashMap<>();
+    public boolean spawnHolos = true;
 
     public void onEnable() {
         saveDefaultConfig();
         createFiles();
         PluginManager pm = Bukkit.getPluginManager();
-        if (getConfig().getDouble("version") < 0.5) {
+        if (getConfig().getDouble("version") < 0.7) {
+            getLogger().severe("----------------------------------------------------------------------------");
             getLogger().severe("Your configuration file for this plugin is to old!");
-            getLogger().warning("A previous update totaly reorganised config.");
-            getLogger().warning("Delete the current config.yml and restart your server to enable this plugin!");
+            getLogger().severe("Delete the current plugins/ExperienceBooster folder to enable this plugin!");
+            getLogger().severe("----------------------------------------------------------------------------");
             pm.disablePlugin(this);
             return;
         }
-        if (getConfig().getDouble("version") < 0.6) {
-            getLogger().warning("A recent update has added some new features to the configuration file.");
-            getLogger().warning("You cannot make use of the followinf features now:");
-            getLogger().warning(" - Jobs support");
-            getLogger().warning(" - Disabling experience potions when minecraft boosters are active.");
-            getLogger()
-                    .warning("Delete the current config.yml and restart your server if you want to make use of these!");
+        if (pm.getPlugin("HolographicDisplays") == null) {
+            spawnHolos = false;
+            getLogger().warning("----------------------------------------------------------------------------");
+            getLogger().warning("HolographicDisplays dependency is missing!");
+            getLogger().warning("Please install the latest version of HolographicDisplays. It can be gotten");
+            getLogger().warning("from: https://dev.bukkit.org/projects/holographic-displays");
+            getLogger().warning(" ");
+            getLogger().warning("[IMPORTANT] No holograms will be shown without this plugin!");
+            getLogger().warning("----------------------------------------------------------------------------");
+            return;
         }
         pm.registerEvents(new InventoryListener(this), this);
         pm.registerEvents(new HologramListener(this), this);
@@ -235,33 +224,12 @@ public class Main extends JavaPlugin implements Listener {
                 }
             }
             // Despawn hologram task
-            Iterator<Entry<UUID, Long>> it = xpNotifiers.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<UUID, Long> pair = it.next();
-                if (System.currentTimeMillis() > pair.getValue()) {
-                    Entity e = Bukkit.getEntity(pair.getKey());
-                    if (e != null) {
-                        e.remove();
-                    }
-                    it.remove();
+           for(Hologram holo : HologramsAPI.getHolograms(this)){
+                if(holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()){
+                    holo.delete();
                 }
-            }
+           }
         }, 20L, 20L);
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            // Hhologram move task
-            Iterator<Entry<ArmorStand, Location>> move = moveThese.entrySet().iterator();
-            while (move.hasNext()) {
-                Entry<ArmorStand, Location> pair = move.next();
-                ArmorStand ast = pair.getKey();
-                Location loc = pair.getValue();
-                if (ast == null) {
-                    move.remove();
-                } else {
-                    ast.teleport(loc);
-                    move.remove();
-                }
-            }
-        }, 2L, 2L);
 
         // Lazy solution:
         preloadedTypes.put(getConfig().getString("Boosters.Minecraft.type"), BoosterType.Minecraft);
@@ -302,15 +270,9 @@ public class Main extends JavaPlugin implements Listener {
             bar_jobs = null;
         }
         // Despawning the active holograms
-        Iterator<Entry<UUID, Long>> it = xpNotifiers.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<UUID, Long> pair = it.next();
-            Entity e = Bukkit.getEntity(pair.getKey());
-            if (e != null) {
-                e.remove();
-            }
-            it.remove();
-        }
+       for(Hologram holo : HologramsAPI.getHolograms(this)){
+            holo.delete();
+       }
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

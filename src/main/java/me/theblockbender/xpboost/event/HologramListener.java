@@ -1,16 +1,15 @@
 package me.theblockbender.xpboost.event;
 
-import org.bukkit.Location;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
-
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 public class HologramListener implements Listener {
 
@@ -22,70 +21,54 @@ public class HologramListener implements Listener {
 
     @EventHandler
     public void onPlayerKillEntity(EntityDeathEvent event) {
+        if(!main.spawnHolos)
+            return;
         Entity e = event.getEntity();
+        Location loc = e.getLocation().clone().add(0, 1.0, 0);
+        Hologram hologram = HologramsAPI.createHologram(main, loc);
         boolean boosted = false;
-        if (main.isBoosted(BoosterType.Minecraft) && main.getConfig().getBoolean("Indicator.spawn-minecraft")) {
+        if (main.isBoosted(BoosterType.Minecraft) && main.getConfig().getBoolean("Minecraft.hologram-when-boosted")) {
             if (event.getDroppedExp() > 0) {
-                Location loc = e.getLocation().clone().add(0, 1.3, 0).add(0, -10, 0);
-                ArmorStand stand = (ArmorStand) e.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-                stand.setVisible(false);
-                stand.setGravity(false);
-                stand.setSmall(true);
-                stand.setCustomNameVisible(true);
                 int multi = main.getMultiplier(BoosterType.Minecraft);
                 int exp = event.getDroppedExp();
-                stand.setCustomName(ChatColor.translateAlternateColorCodes('&',
-                        main.getConfig().getString("Indicator.name-minecraft").replace("{multiplier}", multi + "")
-                                .replace("{amount}", exp + "")
-                                .replace("{multiplier-word}", main.getMultiplierName(BoosterType.Minecraft))
-                                .replace("{amount-multiplied}", "" + multi * exp)));
-                stand.setMarker(true);
-                main.xpNotifiers.put(stand.getUniqueId(), System.currentTimeMillis() + 2000);
-                main.moveThese.put(stand, loc.clone().add(0, 10, 0));
+                int expmulti = multi * exp;
+                for (String s : main.getConfig().getStringList("Minecraft.hologram-text-when-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.Minecraft))));
+                }
             }
             boosted = true;
         }
-        if (main.isBoosted(BoosterType.SkillAPI) && main.getConfig().getBoolean("Indicator.spawn-skillapi")) {
+        if (main.isBoosted(BoosterType.SkillAPI) && main.getConfig().getBoolean("SkillAPI.hologram-when-boosted")) {
             if (event.getDroppedExp() > 0) {
-                Location loc = e.getLocation().clone().add(0, 1.3, 0).add(0, -10, 0);
-                if (boosted) {
-                    loc.add(0, 0.3, 0);
-                }
-                ArmorStand stand = (ArmorStand) e.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-                stand.setVisible(false);
-                stand.setGravity(false);
-                stand.setSmall(true);
-                stand.setCustomNameVisible(true);
                 int multi = main.getMultiplier(BoosterType.SkillAPI);
                 int exp = event.getDroppedExp();
-                stand.setCustomName(ChatColor.translateAlternateColorCodes('&',
-                        main.getConfig().getString("Indicator.name-skillapi").replace("{multiplier}", multi + "")
-                                .replace("{amount}", exp + "")
-                                .replace("{multiplier-word}", main.getMultiplierName(BoosterType.SkillAPI))
-                                .replace("{amount-multiplied}", "" + multi * exp)));
-                stand.setMarker(true);
-                main.xpNotifiers.put(stand.getUniqueId(), System.currentTimeMillis() + 2000);
-                main.moveThese.put(stand, loc.clone().add(0, 10, 0));
+                int expmulti = multi * exp;
+                for (String s : main.getConfig().getStringList("SkillAPI.hologram-text-when-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.SkillAPI))));
+                }
             }
             boosted = true;
         }
         if (boosted) {
+            hologram.teleport(hologram.getLocation().add(0,0.3 * hologram.size(),0));
             return;
         }
-        if (main.getConfig().getBoolean("Indicator.spawn-when-no-booster")) {
+        if (main.getConfig().getBoolean("Minecraft.hologram-when-not-boosted")) {
             if (event.getDroppedExp() > 0) {
-                Location loc = e.getLocation().clone().add(0, 1.3, 0).add(0, -10, 0);
-                ArmorStand stand = (ArmorStand) e.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-                stand.setVisible(false);
-                stand.setGravity(false);
-                stand.setSmall(true);
-                stand.setCustomNameVisible(true);
-                stand.setCustomName(ChatColor.translateAlternateColorCodes('&', main.getConfig()
-                        .getString("Indicator.name-when-no-booster").replace("{amount}", event.getDroppedExp() + "")));
-                stand.setMarker(true);
-                main.xpNotifiers.put(stand.getUniqueId(), System.currentTimeMillis() + 2000);
-                main.moveThese.put(stand, loc.clone().add(0, 10, 0));
+                int exp = event.getDroppedExp();
+                for (String s : main.getConfig().getStringList("Minecraft.hologram-text-when-not-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "")));
+                }
             }
         }
+        if (main.getConfig().getBoolean("SkillAPI.hologram-when-not-boosted")) {
+            if (event.getDroppedExp() > 0) {
+                int exp = event.getDroppedExp();
+                for (String s : main.getConfig().getStringList("SkillAPI.hologram-text-when-not-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "")));
+                }
+            }
+        }
+        hologram.teleport(hologram.getLocation().add(0,0.3 * hologram.size(),0));
     }
 }

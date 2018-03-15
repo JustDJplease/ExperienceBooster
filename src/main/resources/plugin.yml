@@ -5,7 +5,7 @@ author: TheBlockBender
 authors: [NonameSL]
 permission-message: You are not allowed to do this!
 version: ${version}
-softdepend: [SkillAPI, mcMMO, Jobs]
+softdepend: [SkillAPI, mcMMO, Jobs, HolographicDisplays]
 
 commands:
   xpboost:

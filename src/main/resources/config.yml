@@ -35,9 +35,11 @@ Boosters:
       hologram-when-boosted: true
       # This is the text of that hologram. It supports multiple lines! Available placeholders:
       # {amount} the amount of experience dropped.
-      # {current-multiplier} is replaced with the word 'Double, Triple, etc.
+      # {amount-multiplied} the amount of experience received after it is multiplied.
+      # {multiplier} is replaced with the multiplier active.
+      # {multiplier-name} is replaced with the word 'Double, Triple, etc.
       hologram-text-when-boosted:
-      - '&2[&a+{amount} XP&2]'
+      - '&2[&a+{amount-multiplied} XP&2]'
       - '&2[{current-multiplier} Experience]'
 
    SkillAPI:
@@ -54,7 +56,7 @@ Boosters:
       - '&7[&f+{amount} Skill XP&7]'
       hologram-when-boosted: true
       hologram-text-when-boosted:
-      - '&3[&b+{amount} Skill XP&3]'
+      - '&3[&b+{amount-multiplied} Skill XP&3]'
       - '&3[{current-multiplier} Experience]'
 
    McMMO:
