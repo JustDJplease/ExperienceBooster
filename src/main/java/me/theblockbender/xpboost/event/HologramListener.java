@@ -21,8 +21,11 @@ public class HologramListener implements Listener {
 
     @EventHandler
     public void onPlayerKillEntity(EntityDeathEvent event) {
-        if(!main.spawnHolos)
+        if (!main.spawnHolos)
             return;
+        if (!main.getConfig().getBoolean("Minecraft.hologram-when-not-boosted") && !main.getConfig().getBoolean("Minecraft.hologram-when-boosted") && !main.getConfig().getBoolean("SkillAPI.hologram-when-not-boosted") && !main.getConfig().getBoolean("SkillAPI.hologram-when-boosted")) {
+            return;
+        }
         Entity e = event.getEntity();
         Location loc = e.getLocation().clone().add(0, 1.0, 0);
         Hologram hologram = HologramsAPI.createHologram(main, loc);
@@ -50,7 +53,7 @@ public class HologramListener implements Listener {
             boosted = true;
         }
         if (boosted) {
-            hologram.teleport(hologram.getLocation().add(0,0.3 * hologram.size(),0));
+            hologram.teleport(hologram.getLocation().add(0, 0.3 * hologram.size(), 0));
             return;
         }
         if (main.getConfig().getBoolean("Minecraft.hologram-when-not-boosted")) {
@@ -69,6 +72,6 @@ public class HologramListener implements Listener {
                 }
             }
         }
-        hologram.teleport(hologram.getLocation().add(0,0.3 * hologram.size(),0));
+        hologram.teleport(hologram.getLocation().add(0, 0.3 * hologram.size(), 0));
     }
 }
