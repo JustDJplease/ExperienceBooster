@@ -36,13 +36,47 @@ public class BoosterCommand implements CommandExecutor {
                 return true;
             }
         }
+        if(args.length == 2){
+            if (args[0].equalsIgnoreCase("boost")) {
+                if (!isPlayer) {
+                    sender.sendMessage(main.getMessage("command-from-console"));
+                    return true;
+                }
+                if (!sender.hasPermission("xpboost.admin")) {
+                    sender.sendMessage(main.getMessage("command-no-permission"));
+                    return true;
+                }
+                BoosterType type = null;
+                if (args[1].equalsIgnoreCase("minecraft")) {
+                    type = BoosterType.Minecraft;
+                }
+                if (args[1].equalsIgnoreCase("skillapi")) {
+                    type = BoosterType.SkillAPI;
+                }
+                if (args[1].equalsIgnoreCase("mcmmo")) {
+                    type = BoosterType.McMMO;
+                }
+                // Future add argument-type here
+                if (args[1].equalsIgnoreCase("jobs")) {
+                    type = BoosterType.Jobs;
+                }
+                if (type == null) {
+                    sender.sendMessage(main.getMessage("command-invalid-type"));
+                    // Future add type here
+                    sender.sendMessage(main.getMessage("command-available-types"));
+                    return true;
+                }
+                main.cmdActivate((Player) sender, type);
+                return true;
+            }
+        }
         if (args.length < 3 || args.length > 4) {
             sendHelp(sender, label);
             return true;
         }
         String subcommand = args[0].toLowerCase();
         Player player = null;
-        if (!subcommand.equalsIgnoreCase("boost")) {
+        if (subcommand.equalsIgnoreCase("give") || subcommand.equalsIgnoreCase("take")|| subcommand.equalsIgnoreCase("reset")) {
             player = Bukkit.getPlayer(args[1]);
             if (player == null) {
                 sender.sendMessage(main.getMessage("command-player-not-online").replace("{player}", args[1]));
@@ -71,19 +105,7 @@ public class BoosterCommand implements CommandExecutor {
         }
 
         if (args.length == 3) {
-            if (subcommand.contains("boost")) {
-                if (!isPlayer) {
-                    sender.sendMessage(main.getMessage("command-from-console"));
-                    return true;
-                }
-                if (!sender.hasPermission("xpboost.admin")) {
-                    sender.sendMessage(main.getMessage("command-no-permission"));
-                    return true;
-                }
-                main.cmdActivate((Player) sender, type);
-                return true;
-            }
-            if (subcommand.contains("give")) {
+            if (subcommand.equalsIgnoreCase("give")) {
                 if (!sender.hasPermission("xpboost.admin")) {
                     sender.sendMessage(main.getMessage("command-no-permission"));
                     return true;
@@ -91,7 +113,7 @@ public class BoosterCommand implements CommandExecutor {
                 main.addBooster(player, 1, sender, type);
                 return true;
             }
-            if (subcommand.contains("take")) {
+            if (subcommand.equalsIgnoreCase("take")) {
                 if (!sender.hasPermission("xpboost.admin")) {
                     sender.sendMessage(main.getMessage("command-no-permission"));
                     return true;
@@ -99,7 +121,7 @@ public class BoosterCommand implements CommandExecutor {
                 main.takeBooster(player, 1, sender, type);
                 return true;
             }
-            if (subcommand.contains("reset")) {
+            if (subcommand.equalsIgnoreCase("reset")) {
                 if (!sender.hasPermission("xpboost.admin")) {
                     sender.sendMessage(main.getMessage("command-no-permission"));
                     return true;
@@ -121,7 +143,7 @@ public class BoosterCommand implements CommandExecutor {
             sender.sendMessage(main.getMessage("command-number-to-weird"));
             return true;
         }
-        if (subcommand.contains("give")) {
+        if (subcommand.equalsIgnoreCase("give")) {
             if (!sender.hasPermission("xpboost.admin")) {
                 sender.sendMessage(main.getMessage("command-no-permission"));
                 return true;
@@ -129,7 +151,7 @@ public class BoosterCommand implements CommandExecutor {
             main.addBooster(player, amount, sender, type);
             return true;
         }
-        if (subcommand.contains("take")) {
+        if (subcommand.equalsIgnoreCase("take")) {
             if (!sender.hasPermission("xpboost.admin")) {
                 sender.sendMessage(main.getMessage("command-no-permission"));
                 return true;

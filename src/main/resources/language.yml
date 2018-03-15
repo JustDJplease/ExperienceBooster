@@ -44,13 +44,13 @@ command-no-booster: "&4Error:&c You do not have this Experience Booster. You can
 
 # The help menu that is displayed in chat when an unknown command is run.
 # Placeholders: {cmd} - the alias of the command used by the player.
-help-divider: "&8&m--------[&b&lExperience &3&lBooster+&8&m]--------"
+help-divider: "&8&m--------[&b&lExperience &3&lBooster&8&m]--------"
 help-header: "&f&lExperience Booster Commands:"
 help-gui: "&b/{cmd} &8: &7Open up the booster menu."
 help-give: "&b/{cmd} &3give <player> <type> [amount] &8: &7Give a booster."
 help-take: "&b/{cmd} &3take <player> <type> [amount] &8: &7Take a booster."
 help-reset: "&b/{cmd} &3reset <player> <type> &8: &7Take all boosters."
-help-start-booster: "&b/{cmd} &3boost <duration> <type> &8: &7Manually start a booster!"
+help-start-booster: "&b/{cmd} &3boost <type> &8: &7Manually start a booster!"
 
 # Several messages displayed on certain events.
 event-xpbottle-disabled: "&cYou cannot use experience potions whilst a booster is active!"
@@ -61,7 +61,7 @@ event-plugin-disabled: "&4Error:&c The server has just disabled this plugin."
 event-force-close-inventory: "&cTherefore, you have left the inventory menu."
 
 # The message displayed in chat when a player clicks the 'purchase' option in the GUI.
-store-divider: "&8&m--------[&b&lExperience &3&lBooster+&8&m]--------"
+store-divider: "&8&m--------[&b&lExperience &3&lBooster&8&m]--------"
 store-url: "   &b&lStore link: &3shop.your-server.com"
 store-info: "   &7Click the URL in the chat to open up the store!"
 

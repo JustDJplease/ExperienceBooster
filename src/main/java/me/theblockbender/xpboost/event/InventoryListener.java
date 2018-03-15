@@ -66,6 +66,7 @@ public class InventoryListener implements Listener {
         main.clickCooldown.put(uuid, System.currentTimeMillis() + 500);
         switch (item.getType()) {
             case EXP_BOTTLE:
+                //fixme
                 if (ChatColor.stripColor(item.getItemMeta().getLore().get(4)).contains(" 0 ")) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 0.3f, 1f);
                     player.sendMessage(main.getMessage("command-no-booster"));
@@ -82,7 +83,7 @@ public class InventoryListener implements Listener {
                 main.tryActivateBooster(player, booster);
                 player.closeInventory();
                 return;
-            case INK_SACK:
+            case CHEST:
                 player.sendMessage(main.getMessage("store-divider"));
                 player.sendMessage(" ");
                 player.sendMessage(main.getMessage("store-url"));

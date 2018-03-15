@@ -43,7 +43,7 @@ public class BoosterGUI {
                         .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.Minecraft.multiplier")));
             }
             lore.add(" ");
-            lore.add("§8id: Minecraft");
+            lore.add("§8booster:minecraft");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.Minecraft.type")))
@@ -60,7 +60,7 @@ public class BoosterGUI {
                         .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.SkillAPI.multiplier")));
             }
             lore.add(" ");
-            lore.add("§8id: SkillAPI");
+            lore.add("§8booster:skill");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.SkillAPI.type")))
@@ -77,7 +77,7 @@ public class BoosterGUI {
                         .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.McMMO.multiplier")));
             }
             lore.add(" ");
-            lore.add("§8id: McMMO");
+            lore.add("§8booster:mcmmo");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.McMMO.type")))
@@ -95,7 +95,7 @@ public class BoosterGUI {
                         .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.Jobs.multiplier")));
             }
             lore.add(" ");
-            lore.add("§8id: Jobs");
+            lore.add("§8booster:jobs");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.Jobs.type")))
