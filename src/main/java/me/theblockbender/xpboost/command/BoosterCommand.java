@@ -144,12 +144,12 @@ public class BoosterCommand implements CommandExecutor {
     private void sendHelp(CommandSender sender, String label) {
         sender.sendMessage(main.getMessage("help-divider"));
         sender.sendMessage(main.getMessage("help-header"));
-        sender.sendMessage(main.getMessage("help-gui").replace("cmd", label));
-        sender.sendMessage(main.getMessage("help-give").replace("cmd", label));
-        sender.sendMessage(main.getMessage("help-take").replace("cmd", label));
-        sender.sendMessage(main.getMessage("help-reset").replace("cmd", label));
-        sender.sendMessage(main.getMessage("help-start-booster").replace("cmd", label));
-        sender.sendMessage(main.getMessage("help-reload").replace("cmd", label));
+        sender.sendMessage(main.getMessage("help-gui").replace("{cmd}", label));
+        sender.sendMessage(main.getMessage("help-give").replace("{cmd}", label));
+        sender.sendMessage(main.getMessage("help-take").replace("{cmd}", label));
+        sender.sendMessage(main.getMessage("help-reset").replace("{cmd}", label));
+        sender.sendMessage(main.getMessage("help-start-booster").replace("{cmd}", label));
+        sender.sendMessage(main.getMessage("help-reload").replace("{cmd}", label));
         sender.sendMessage(main.getMessage("help-divider"));
     }
 

@@ -48,10 +48,10 @@ help-divider: "&8&m--------[&b&lExperience &3&lBooster+&8&m]--------"
 help-header: "&f&lExperience Booster Commands:"
 help-gui: "&b/{cmd} &8: &7Open up the booster menu."
 help-give: "&b/{cmd} &3give <player> <type> [amount] &8: &7Give a booster."
-help take: "&b/{cmd} &3take <player> <type> [amount] &8: &7Take a booster."
+help-take: "&b/{cmd} &3take <player> <type> [amount] &8: &7Take a booster."
 help-reset: "&b/{cmd} &3reset <player> <type> &8: &7Take all boosters."
 help-reload: "&b/{cmd} &3reload &8: &7Reload the configuration files."
-help-start-booster: "&a/{cmd} &3boost <duration> <type> &8: &7Manually start a booster!"
+help-start-booster: "&b/{cmd} &3boost <duration> <type> &8: &7Manually start a booster!"
 
 # Several messages displayed on certain events.
 event-xpbottle-disabled: "&cYou cannot use experience potions whilst a booster is active!"
@@ -124,10 +124,10 @@ gui-booster:
    - ' '
    - '&bDetails:'
    - '&b» &7Duration: &f{duration}'
-   - '&b» &7Multiplier: &7{multiplier}x'
+   - '&b» &7Multiplier: &f{multiplier}x'
    - '&b» &7You have: &f{amount} booster{s}'
    - ' '
-   - '&8Click to activate this booster.'
+   - '&bClick to activate this booster.'
    glow: false
 gui-shop:
    material: CHEST
@@ -138,7 +138,7 @@ gui-shop:
    - '&7Visit our store at &bshop.your-server.com'
    - '&7and purchase boosters to use ingame!'
    - ' '
-   - '&8Click to show the store URL in chat.'
+   - '&bClick to show the store URL in chat.'
    glow: false
 
 # You should NOT touch the options below, as this WILL lead to problems.
