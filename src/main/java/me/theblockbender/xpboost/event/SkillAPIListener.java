@@ -1,18 +1,16 @@
 package me.theblockbender.xpboost.event;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
 import com.sucy.skill.api.enums.ExpSource;
 import com.sucy.skill.api.event.PlayerExperienceGainEvent;
 import com.sucy.skill.api.player.PlayerData;
-
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class SkillAPIListener implements Listener {
 

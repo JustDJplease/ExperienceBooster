@@ -1,7 +1,7 @@
 package me.theblockbender.xpboost.inventory;
 
-import java.util.List;
-
+import me.theblockbender.xpboost.Main;
+import me.theblockbender.xpboost.util.BoosterType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,8 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.theblockbender.xpboost.Main;
-import me.theblockbender.xpboost.util.BoosterType;
+import java.util.List;
 
 public class BoosterGUI {
 

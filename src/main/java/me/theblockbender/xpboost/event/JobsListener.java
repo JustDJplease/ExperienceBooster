@@ -1,12 +1,10 @@
 package me.theblockbender.xpboost.event;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
 import com.gamingmesh.jobs.api.JobsExpGainEvent;
-
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 public class JobsListener implements Listener {
 

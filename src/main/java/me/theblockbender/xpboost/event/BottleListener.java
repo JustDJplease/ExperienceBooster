@@ -1,14 +1,13 @@
 package me.theblockbender.xpboost.event;
 
+import me.theblockbender.xpboost.Main;
+import me.theblockbender.xpboost.util.BoosterType;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import me.theblockbender.xpboost.Main;
-import me.theblockbender.xpboost.util.BoosterType;
 
 public class BottleListener implements Listener {
     private Main main;

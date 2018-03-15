@@ -1,12 +1,10 @@
 package me.theblockbender.xpboost.event;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
-
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 public class mcMMOListener implements Listener {
 

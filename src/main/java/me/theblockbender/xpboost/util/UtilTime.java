@@ -1,10 +1,10 @@
 package me.theblockbender.xpboost.util;
 
+import me.theblockbender.xpboost.Main;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
-import me.theblockbender.xpboost.Main;
 
 public class UtilTime {
 
@@ -23,7 +23,7 @@ public class UtilTime {
             return "0.0 " + main.getMessage("time-second") + main.getMessage("time-multiple");
 
         String type;
-        int  trim = 1;
+        int trim = 1;
         if (time < 60000)
             type = "SECONDS";
         else if (time < 3600000)

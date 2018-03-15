@@ -1,7 +1,8 @@
 package me.theblockbender.xpboost.event;
 
-import java.util.UUID;
-
+import me.theblockbender.xpboost.Main;
+import me.theblockbender.xpboost.util.BoosterType;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -13,9 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import me.theblockbender.xpboost.Main;
-import me.theblockbender.xpboost.util.BoosterType;
-import net.md_5.bungee.api.ChatColor;
+import java.util.UUID;
 
 public class InventoryListener implements Listener {
 
@@ -59,7 +58,7 @@ public class InventoryListener implements Listener {
         if (item == null) {
             return;
         }
-        if(inventory instanceof PlayerInventory) {
+        if (inventory instanceof PlayerInventory) {
             player.sendMessage(main.getMessage("event-wrong-inventory"));
             return;
         }
@@ -75,7 +74,7 @@ public class InventoryListener implements Listener {
                 BoosterType booster;
                 String name = ChatColor.stripColor(item.getItemMeta().getDisplayName()).replace("Activate a ", "").replace(" Experience Booster", "");
                 booster = main.getBoosterValue(name);
-                if(booster == null) {
+                if (booster == null) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 0.3f, 1f);
                     player.sendMessage(main.getMessage("event-bugreport"));
                     return;

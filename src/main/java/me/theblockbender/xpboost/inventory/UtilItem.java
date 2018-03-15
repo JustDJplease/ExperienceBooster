@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Easily create itemstacks, without messing your hands.
- *
+ * <p>
  * Status: Completed Notice: Makes use of the 'setUnbreakable()' method that was
  * introduced in spigot 1.11.
  *
@@ -22,8 +22,7 @@ public class UtilItem {
     /**
      * Create a new ItemBuilder over an existing itemstack.
      *
-     * @param is
-     *            The itemstack to create the ItemBuilder over.
+     * @param is The itemstack to create the ItemBuilder over.
      */
     UtilItem(ItemStack is) {
         this.is = is;
@@ -32,10 +31,8 @@ public class UtilItem {
     /**
      * Create a new ItemBuilder from scratch.
      *
-     * @param m
-     *            The material of the item.
-     * @param amount
-     *            The amount of the item.
+     * @param m      The material of the item.
+     * @param amount The amount of the item.
      */
     UtilItem(Material m, int amount) {
         is = new ItemStack(m, amount);
@@ -45,8 +42,7 @@ public class UtilItem {
     /**
      * Change the durability of the item.
      *
-     * @param dur
-     *            The durability to set it to.
+     * @param dur The durability to set it to.
      */
     public UtilItem setDurability(short dur) {
         is.setDurability(dur);
@@ -56,8 +52,7 @@ public class UtilItem {
     /**
      * Set the displayname of the item.
      *
-     * @param name
-     *            The name to change it to.
+     * @param name The name to change it to.
      */
     public UtilItem setName(String name) {
         ItemMeta im = is.getItemMeta();
@@ -85,8 +80,7 @@ public class UtilItem {
     /**
      * Re-sets the lore.
      *
-     * @param lore
-     *            The lore to set it to.
+     * @param lore The lore to set it to.
      */
     public UtilItem setLore(List<String> lore) {
         ItemMeta im = is.getItemMeta();
@@ -106,7 +100,7 @@ public class UtilItem {
 
 
     public UtilItem setGlowing(Boolean guiGlowing) {
-        if(guiGlowing) {
+        if (guiGlowing) {
             is.addEnchantment(Enchantment.DURABILITY, 10);
         }
         return this;

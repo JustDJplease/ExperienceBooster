@@ -1,12 +1,11 @@
 package me.theblockbender.xpboost.util;
 
-import java.util.UUID;
-
+import me.theblockbender.xpboost.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import me.theblockbender.xpboost.Main;
+import java.util.UUID;
 
 public class Booster {
 

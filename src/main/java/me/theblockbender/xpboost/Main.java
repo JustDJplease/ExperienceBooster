@@ -35,6 +35,7 @@ public class Main extends JavaPlugin implements Listener {
     public UtilTime utilTime = new UtilTime(this);
     public List<UUID> openInventories = new ArrayList<>();
     public Map<UUID, Long> clickCooldown = new HashMap<>();
+    public boolean spawnHolos = true;
     private File storagef;
     private FileConfiguration storage;
     private FileConfiguration messages;
@@ -45,7 +46,6 @@ public class Main extends JavaPlugin implements Listener {
     private BossBar bar_jobs = null;
     private List<Booster> activeBoosters = new ArrayList<>();
     private Map<String, BoosterType> preloadedTypes = new HashMap<>();
-    public boolean spawnHolos = true;
 
     public void onEnable() {
         saveDefaultConfig();
@@ -224,11 +224,11 @@ public class Main extends JavaPlugin implements Listener {
                 }
             }
             // Despawn hologram task
-           for(Hologram holo : HologramsAPI.getHolograms(this)){
-                if(holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()){
+            for (Hologram holo : HologramsAPI.getHolograms(this)) {
+                if (holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()) {
                     holo.delete();
                 }
-           }
+            }
         }, 20L, 20L);
 
         // Lazy solution:
@@ -270,9 +270,9 @@ public class Main extends JavaPlugin implements Listener {
             bar_jobs = null;
         }
         // Despawning the active holograms
-       for(Hologram holo : HologramsAPI.getHolograms(this)){
+        for (Hologram holo : HologramsAPI.getHolograms(this)) {
             holo.delete();
-       }
+        }
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
