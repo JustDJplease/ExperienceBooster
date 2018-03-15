@@ -50,7 +50,6 @@ help-gui: "&b/{cmd} &8: &7Open up the booster menu."
 help-give: "&b/{cmd} &3give <player> <type> [amount] &8: &7Give a booster."
 help-take: "&b/{cmd} &3take <player> <type> [amount] &8: &7Take a booster."
 help-reset: "&b/{cmd} &3reset <player> <type> &8: &7Take all boosters."
-help-reload: "&b/{cmd} &3reload &8: &7Reload the configuration files."
 help-start-booster: "&b/{cmd} &3boost <duration> <type> &8: &7Manually start a booster!"
 
 # Several messages displayed on certain events.
