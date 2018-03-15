@@ -223,9 +223,11 @@ public class Main extends JavaPlugin implements Listener {
                 }
             }
             // Despawn hologram task
-            for (Hologram holo : HologramsAPI.getHolograms(this)) {
-                if (holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()) {
-                    holo.delete();
+            if (spawnHolos) {
+                for (Hologram holo : HologramsAPI.getHolograms(this)) {
+                    if (holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()) {
+                        holo.delete();
+                    }
                 }
             }
         }, 20L, 20L);
@@ -269,7 +271,7 @@ public class Main extends JavaPlugin implements Listener {
             bar_jobs = null;
         }
         // Despawning the active holograms
-        if(spawnHolos) {
+        if (spawnHolos) {
             for (Hologram holo : HologramsAPI.getHolograms(this)) {
                 holo.delete();
             }
