@@ -60,7 +60,6 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().warning(" ");
             getLogger().warning("[IMPORTANT] No holograms will be shown without this plugin!");
             getLogger().warning("----------------------------------------------------------------------------");
-            return;
         }
         if (getConfig().getDouble("version") < 0.7) {
             getLogger().severe("----------------------------------------------------------------------------");
