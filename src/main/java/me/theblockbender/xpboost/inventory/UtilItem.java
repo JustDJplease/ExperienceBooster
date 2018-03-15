@@ -101,7 +101,7 @@ public class UtilItem {
 
     public UtilItem setGlowing(Boolean guiGlowing) {
         if (guiGlowing) {
-            is.addEnchantment(Enchantment.DURABILITY, 10);
+            is.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
         }
         return this;
     }
