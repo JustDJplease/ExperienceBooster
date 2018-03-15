@@ -51,14 +51,6 @@ public class Main extends JavaPlugin implements Listener {
         saveDefaultConfig();
         createFiles();
         PluginManager pm = Bukkit.getPluginManager();
-        if (getConfig().getDouble("version") < 0.7) {
-            getLogger().severe("----------------------------------------------------------------------------");
-            getLogger().severe("Your configuration file for this plugin is to old!");
-            getLogger().severe("Delete the current plugins/ExperienceBooster folder to enable this plugin!");
-            getLogger().severe("----------------------------------------------------------------------------");
-            pm.disablePlugin(this);
-            return;
-        }
         if (pm.getPlugin("HolographicDisplays") == null) {
             spawnHolos = false;
             getLogger().warning("----------------------------------------------------------------------------");
@@ -68,6 +60,14 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().warning(" ");
             getLogger().warning("[IMPORTANT] No holograms will be shown without this plugin!");
             getLogger().warning("----------------------------------------------------------------------------");
+            return;
+        }
+        if (getConfig().getDouble("version") < 0.7) {
+            getLogger().severe("----------------------------------------------------------------------------");
+            getLogger().severe("Your configuration file for this plugin is to old!");
+            getLogger().severe("Delete the current plugins/ExperienceBooster folder to enable this plugin!");
+            getLogger().severe("----------------------------------------------------------------------------");
+            pm.disablePlugin(this);
             return;
         }
         pm.registerEvents(new InventoryListener(this), this);
@@ -270,8 +270,10 @@ public class Main extends JavaPlugin implements Listener {
             bar_jobs = null;
         }
         // Despawning the active holograms
-        for (Hologram holo : HologramsAPI.getHolograms(this)) {
-            holo.delete();
+        if(spawnHolos) {
+            for (Hologram holo : HologramsAPI.getHolograms(this)) {
+                holo.delete();
+            }
         }
     }
 
