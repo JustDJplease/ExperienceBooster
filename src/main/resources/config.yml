@@ -81,7 +81,7 @@ Boosters:
 
 # Prevents the use of experience potions when a Minecraft booster is active.
 # You should set this to TRUE if your server uses an experience-bottle-filling-plugin!
-Disable-experience-potions-when-booster-acive: false
+Disable-experience-potions-when-booster-active: false
    
 # You have completed configuring this plugin!
 # You should NOT touch the options below, as this will lead to problems / console spam.
