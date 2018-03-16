@@ -3,7 +3,7 @@ Boosters:
       # If boosters of this type are available in game, and can be activated.
       enabled: true
       # This is the name of this type of booster shown in chat when it is activated.
-      type: "Minecraft"
+      type: "MINECRAFT"
       # If people can add a booster to the current active booster,
       # to add its multiplication factors together.
       canStack: true
@@ -24,7 +24,7 @@ Boosters:
       # and with 'Multiple Players', when there are boosters stacked.
       # {time} is replaced with the time left on the earliest booster activated.
       # Once this runs out, this will display the time left on the next booster active of this type.
-      bossbar-message: "&2{current-multiplier} Minecraft XP from &a{player} &7[&f{time}&7]"
+      bossbar-message: "&2{current-multiplier} MINECRAFT XP from &a{player} &7[&f{time}&7]"
       # Should a hologram display experience gotten when NO booster is active.
       hologram-when-not-boosted: true
       # This is the text of that hologram. It supports multiple lines! Available placeholders:
@@ -62,13 +62,13 @@ Boosters:
    McMMO:
       # This booster is disabled by default.
       enabled: false
-      type: "McMMO"
+      type: "MCMMO"
       canStack: true
       multiplier: 2
       max-active-multiplier: 10
       time: 600
       bossbar-color: "PURPLE"
-      bossbar-message: "&5{current-multiplier} McMMO XP from &d{player} &7[&f{time}&7]"
+      bossbar-message: "&5{current-multiplier} MCMMO XP from &d{player} &7[&f{time}&7]"
 
    Jobs:
       # This booster is disabled by default.
@@ -79,9 +79,9 @@ Boosters:
       max-active-multiplier: 10
       time: 600
       bossbar-color: "YELLOW"
-      bossbar-message: "&6{current-multiplier} Jobs XP from &e{player} &7[&f{time}&7]"
+      bossbar-message: "&6{current-multiplier} JOBS XP from &e{player} &7[&f{time}&7]"
 
-# Prevents the use of experience potions when a Minecraft booster is active.
+# Prevents the use of experience potions when a MINECRAFT booster is active.
 # You should set this to TRUE if your server uses an experience-bottle-filling-plugin!
 Disable-experience-potions-when-booster-active: false
    

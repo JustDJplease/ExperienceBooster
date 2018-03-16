@@ -16,8 +16,8 @@ public class ExperienceListener implements Listener {
 
     @EventHandler
     public void onExperiencePickup(PlayerExpChangeEvent event) {
-        if (main.isBoosted(BoosterType.Minecraft)) {
-            event.setAmount(event.getAmount() * main.getMultiplier(BoosterType.Minecraft));
+        if (main.isBoosted(BoosterType.MINECRAFT)) {
+            event.setAmount(event.getAmount() * main.getMultiplier(BoosterType.MINECRAFT));
         }
     }
 }

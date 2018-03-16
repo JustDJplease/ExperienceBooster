@@ -22,7 +22,7 @@ public class BottleListener implements Listener {
         if (item == null || item.getType() != Material.EXP_BOTTLE) {
             return;
         }
-        if (main.isBoosted(BoosterType.Minecraft)
+        if (main.isBoosted(BoosterType.MINECRAFT)
                 && main.getConfig().getBoolean("Disable-experience-potions-when-booster-active")) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(main.getMessage("event-xpbottle-disabled"));

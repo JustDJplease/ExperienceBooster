@@ -30,9 +30,9 @@ public class SkillAPIListener implements Listener {
             skip.remove(uuid);
             return;
         }
-        if (main.isBoosted(BoosterType.SkillAPI)) {
+        if (main.isBoosted(BoosterType.SKILLAPI)) {
             event.setCancelled(true);
-            double toAdd = (event.getExp() * main.getMultiplier(BoosterType.SkillAPI));
+            double toAdd = (event.getExp() * main.getMultiplier(BoosterType.SKILLAPI));
             skip.add(uuid);
             player.giveExp(toAdd, ExpSource.MOB);
         }

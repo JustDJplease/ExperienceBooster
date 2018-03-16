@@ -48,30 +48,30 @@ public class BoosterCommand implements CommandExecutor {
                 }
                 BoosterType type = null;
                 if (args[1].equalsIgnoreCase("minecraft")) {
-                    type = BoosterType.Minecraft;
-                    if(!main.isBoosterEnabled(BoosterType.Minecraft)){
+                    type = BoosterType.MINECRAFT;
+                    if(!main.isBoosterEnabled(BoosterType.MINECRAFT)){
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
                 }
                 if (args[1].equalsIgnoreCase("skillapi")) {
-                    type = BoosterType.SkillAPI;
-                    if(!main.isBoosterEnabled(BoosterType.SkillAPI)){
+                    type = BoosterType.SKILLAPI;
+                    if(!main.isBoosterEnabled(BoosterType.SKILLAPI)){
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
                 }
                 if (args[1].equalsIgnoreCase("mcmmo")) {
-                    type = BoosterType.McMMO;
-                    if(!main.isBoosterEnabled(BoosterType.McMMO)){
+                    type = BoosterType.MCMMO;
+                    if(!main.isBoosterEnabled(BoosterType.MCMMO)){
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
                 }
                 // Future add argument-type here
                 if (args[1].equalsIgnoreCase("jobs")) {
-                    type = BoosterType.Jobs;
-                    if(!main.isBoosterEnabled(BoosterType.Jobs)){
+                    type = BoosterType.JOBS;
+                    if(!main.isBoosterEnabled(BoosterType.JOBS)){
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
@@ -101,30 +101,30 @@ public class BoosterCommand implements CommandExecutor {
         }
         BoosterType type = null;
         if (args[2].equalsIgnoreCase("minecraft")) {
-            type = BoosterType.Minecraft;
-            if(!main.isBoosterEnabled(BoosterType.Minecraft)){
+            type = BoosterType.MINECRAFT;
+            if(!main.isBoosterEnabled(BoosterType.MINECRAFT)){
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
         }
         if (args[2].equalsIgnoreCase("skillapi")) {
-            type = BoosterType.SkillAPI;
-            if(!main.isBoosterEnabled(BoosterType.SkillAPI)){
+            type = BoosterType.SKILLAPI;
+            if(!main.isBoosterEnabled(BoosterType.SKILLAPI)){
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
         }
         if (args[2].equalsIgnoreCase("mcmmo")) {
-            type = BoosterType.McMMO;
-            if(!main.isBoosterEnabled(BoosterType.McMMO)){
+            type = BoosterType.MCMMO;
+            if(!main.isBoosterEnabled(BoosterType.MCMMO)){
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
         }
         // Future add argument-type here
         if (args[2].equalsIgnoreCase("jobs")) {
-            type = BoosterType.Jobs;
-            if(!main.isBoosterEnabled(BoosterType.Jobs)){
+            type = BoosterType.JOBS;
+            if(!main.isBoosterEnabled(BoosterType.JOBS)){
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }

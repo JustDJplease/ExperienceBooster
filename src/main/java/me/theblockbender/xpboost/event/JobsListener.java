@@ -16,10 +16,10 @@ public class JobsListener implements Listener {
 
     @EventHandler
     public void onJobExpChange(JobsExpGainEvent event) {
-        if (main.isBoosted(BoosterType.Jobs)) {
-            int multiplier = main.getMultiplier(BoosterType.Jobs);
+        if (main.isBoosted(BoosterType.JOBS)) {
+            int multiplier = main.getMultiplier(BoosterType.JOBS);
             event.setExp(event.getExp() * multiplier);
-            main.debug("Multiplied Jobs Experience for player " + event.getPlayer().getName() + " by " + multiplier
+            main.debug("Multiplied JOBS Experience for player " + event.getPlayer().getName() + " by " + multiplier
                     + "x.");
         }
     }

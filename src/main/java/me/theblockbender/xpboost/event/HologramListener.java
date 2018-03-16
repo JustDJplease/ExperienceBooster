@@ -23,31 +23,31 @@ public class HologramListener implements Listener {
     public void onPlayerKillEntity(EntityDeathEvent event) {
         if (!main.spawnHolos)
             return;
-        if (!main.getConfig().getBoolean("Minecraft.hologram-when-not-boosted") && !main.getConfig().getBoolean("Minecraft.hologram-when-boosted") && !main.getConfig().getBoolean("SkillAPI.hologram-when-not-boosted") && !main.getConfig().getBoolean("SkillAPI.hologram-when-boosted")) {
+        if (!main.getConfig().getBoolean("MINECRAFT.hologram-when-not-boosted") && !main.getConfig().getBoolean("MINECRAFT.hologram-when-boosted") && !main.getConfig().getBoolean("SKILLAPI.hologram-when-not-boosted") && !main.getConfig().getBoolean("SKILLAPI.hologram-when-boosted")) {
             return;
         }
         Entity e = event.getEntity();
         Location loc = e.getLocation().clone().add(0, 1.0, 0);
         Hologram hologram = HologramsAPI.createHologram(main, loc);
         boolean boosted = false;
-        if (main.isBoosted(BoosterType.Minecraft) && main.getConfig().getBoolean("Minecraft.hologram-when-boosted")) {
+        if (main.isBoosted(BoosterType.MINECRAFT) && main.getConfig().getBoolean("MINECRAFT.hologram-when-boosted")) {
             if (event.getDroppedExp() > 0) {
-                int multi = main.getMultiplier(BoosterType.Minecraft);
+                int multi = main.getMultiplier(BoosterType.MINECRAFT);
                 int exp = event.getDroppedExp();
                 int expmulti = multi * exp;
-                for (String s : main.getConfig().getStringList("Minecraft.hologram-text-when-boosted")) {
-                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.Minecraft))));
+                for (String s : main.getConfig().getStringList("MINECRAFT.hologram-text-when-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.MINECRAFT))));
                 }
             }
             boosted = true;
         }
-        if (main.isBoosted(BoosterType.SkillAPI) && main.getConfig().getBoolean("SkillAPI.hologram-when-boosted")) {
+        if (main.isBoosted(BoosterType.SKILLAPI) && main.getConfig().getBoolean("SKILLAPI.hologram-when-boosted")) {
             if (event.getDroppedExp() > 0) {
-                int multi = main.getMultiplier(BoosterType.SkillAPI);
+                int multi = main.getMultiplier(BoosterType.SKILLAPI);
                 int exp = event.getDroppedExp();
                 int expmulti = multi * exp;
-                for (String s : main.getConfig().getStringList("SkillAPI.hologram-text-when-boosted")) {
-                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.SkillAPI))));
+                for (String s : main.getConfig().getStringList("SKILLAPI.hologram-text-when-boosted")) {
+                    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "").replace("{amount-multiplied}", expmulti + "").replace("{multiplier}", multi + "").replace("{multiplier-name}", main.getMultiplierName(BoosterType.SKILLAPI))));
                 }
             }
             boosted = true;
@@ -56,18 +56,18 @@ public class HologramListener implements Listener {
             hologram.teleport(hologram.getLocation().add(0, 0.3 * hologram.size(), 0));
             return;
         }
-        if (main.getConfig().getBoolean("Minecraft.hologram-when-not-boosted")) {
+        if (main.getConfig().getBoolean("MINECRAFT.hologram-when-not-boosted")) {
             if (event.getDroppedExp() > 0) {
                 int exp = event.getDroppedExp();
-                for (String s : main.getConfig().getStringList("Minecraft.hologram-text-when-not-boosted")) {
+                for (String s : main.getConfig().getStringList("MINECRAFT.hologram-text-when-not-boosted")) {
                     hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "")));
                 }
             }
         }
-        if (main.getConfig().getBoolean("SkillAPI.hologram-when-not-boosted")) {
+        if (main.getConfig().getBoolean("SKILLAPI.hologram-when-not-boosted")) {
             if (event.getDroppedExp() > 0) {
                 int exp = event.getDroppedExp();
-                for (String s : main.getConfig().getStringList("SkillAPI.hologram-text-when-not-boosted")) {
+                for (String s : main.getConfig().getStringList("SKILLAPI.hologram-text-when-not-boosted")) {
                     hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', s.replace("{amount}", exp + "")));
                 }
             }

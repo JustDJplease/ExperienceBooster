@@ -34,71 +34,71 @@ public class BoosterGUI {
             gui.setItem(i, spacer);
         }
         int nextFreeSlot = 11;
-        if (main.isBoosterEnabled(BoosterType.Minecraft)) {
+        if (main.isBoosterEnabled(BoosterType.MINECRAFT)) {
             List<String> lore = main.getGuiLore("gui-booster.lore");
             for (int i = 0; i < lore.size(); i++) {
                 lore.set(i, lore.get(i)
                         .replace("{duration}",
-                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.Minecraft.time") * 1000L))
-                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.Minecraft.multiplier")));
+                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.MINECRAFT.time") * 1000L))
+                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.MINECRAFT.multiplier")));
             }
             lore.add(" ");
             lore.add("§8booster:minecraft");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
-                            main.getConfig().getString("Boosters.Minecraft.type")))
+                            main.getConfig().getString("Boosters.MINECRAFT.type")))
                     .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
-        if (main.isBoosterEnabled(BoosterType.SkillAPI)) {
+        if (main.isBoosterEnabled(BoosterType.SKILLAPI)) {
             List<String> lore = main.getGuiLore("gui-booster.lore");
             for (int i = 0; i < lore.size(); i++) {
                 lore.set(i, lore.get(i)
                         .replace("{duration}",
-                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.SkillAPI.time") * 1000L))
-                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.SkillAPI.multiplier")));
+                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.SKILLAPI.time") * 1000L))
+                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.SKILLAPI.multiplier")));
             }
             lore.add(" ");
             lore.add("§8booster:skill");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
-                            main.getConfig().getString("Boosters.SkillAPI.type")))
+                            main.getConfig().getString("Boosters.SKILLAPI.type")))
                     .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
-        if (main.isBoosterEnabled(BoosterType.McMMO)) {
+        if (main.isBoosterEnabled(BoosterType.MCMMO)) {
             List<String> lore = main.getGuiLore("gui-booster.lore");
             for (int i = 0; i < lore.size(); i++) {
                 lore.set(i, lore.get(i)
                         .replace("{duration}",
-                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.McMMO.time") * 1000L))
-                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.McMMO.multiplier")));
+                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.MCMMO.time") * 1000L))
+                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.MCMMO.multiplier")));
             }
             lore.add(" ");
             lore.add("§8booster:mcmmo");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
-                            main.getConfig().getString("Boosters.McMMO.type")))
+                            main.getConfig().getString("Boosters.MCMMO.type")))
                     .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
         // Future add item here
-        if (main.isBoosterEnabled(BoosterType.Jobs)) {
+        if (main.isBoosterEnabled(BoosterType.JOBS)) {
             List<String> lore = main.getGuiLore("gui-booster.lore");
             for (int i = 0; i < lore.size(); i++) {
                 lore.set(i, lore.get(i)
                         .replace("{duration}",
-                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.Jobs.time") * 1000L))
-                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.Jobs.multiplier")));
+                                main.utilTime.translateTime(main.getConfig().getInt("Boosters.JOBS.time") * 1000L))
+                        .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.JOBS.multiplier")));
             }
             lore.add(" ");
             lore.add("§8booster:jobs");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
-                            main.getConfig().getString("Boosters.Jobs.type")))
+                            main.getConfig().getString("Boosters.JOBS.type")))
                     .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
@@ -122,7 +122,7 @@ public class BoosterGUI {
             if (item.getType() == main.getGuiMaterial("gui-booster.material")) {
                 try {
                     List<String> lore = item.getItemMeta().getLore();
-                    BoosterType type = BoosterType.valueOf(lore.get(lore.size() - 1).replace("§8id: ", ""));
+                    BoosterType type = BoosterType.valueOf(lore.get(lore.size() - 1).replace("§8booster:", "").toUpperCase());
                     int i = main.getBoosterAmount(player, type);
                     String s = "";
                     if (i != 1) {

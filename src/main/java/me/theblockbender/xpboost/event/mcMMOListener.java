@@ -16,10 +16,10 @@ public class mcMMOListener implements Listener {
 
     @EventHandler
     public void onMcMMOExperienceChangeEvent(McMMOPlayerXpGainEvent event) {
-        if (main.isBoosted(BoosterType.McMMO)) {
-            int multiplier = main.getMultiplier(BoosterType.McMMO);
+        if (main.isBoosted(BoosterType.MCMMO)) {
+            int multiplier = main.getMultiplier(BoosterType.MCMMO);
             event.setRawXpGained(event.getRawXpGained() * multiplier);
-            main.debug("Multiplied McMMO Experience for player " + event.getPlayer().getName() + " by " + multiplier
+            main.debug("Multiplied MCMMO Experience for player " + event.getPlayer().getName() + " by " + multiplier
                     + "x.");
         }
     }
