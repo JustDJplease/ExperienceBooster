@@ -47,7 +47,7 @@ public class BoosterGUI {
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.MINECRAFT.type")))
-                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
+                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glow")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
@@ -60,11 +60,11 @@ public class BoosterGUI {
                         .replace("{multiplier}", "" + main.getConfig().getInt("Boosters.SKILLAPI.multiplier")));
             }
             lore.add(" ");
-            lore.add("§8booster:skill");
+            lore.add("§8booster:skillapi");
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.SKILLAPI.type")))
-                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
+                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glow")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
@@ -81,7 +81,7 @@ public class BoosterGUI {
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.MCMMO.type")))
-                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
+                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glow")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
@@ -99,7 +99,7 @@ public class BoosterGUI {
             gui.setItem(nextFreeSlot, new UtilItem(main.getGuiMaterial("gui-booster.material"), 1)
                     .setName(main.getGuiName("gui-booster.name").replace("{type}",
                             main.getConfig().getString("Boosters.JOBS.type")))
-                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glowing")).setInfinityDurability()
+                    .setLore(lore).setGlowing(main.getGuiGlowing("gui-booster.glow")).setInfinityDurability()
                     .toItemStack());
             nextFreeSlot++;
         }
@@ -113,11 +113,12 @@ public class BoosterGUI {
     }
 
     public void open(Player player) {
-        Inventory clone = gui;
-        for (int slot = 11; slot < gui.getSize(); slot++) {
+        Inventory clone =  Bukkit.createInventory(null, gui.getSize(), gui.getName());
+        clone.setContents(gui.getContents());
+        for (int slot = 10; slot < clone.getSize(); slot++) {
             ItemStack item = clone.getItem(slot);
             if (item == null || item.getType() == Material.AIR) {
-                break;
+                continue;
             }
             if (item.getType() == main.getGuiMaterial("gui-booster.material")) {
                 try {
@@ -133,6 +134,7 @@ public class BoosterGUI {
                     }
                     clone.setItem(slot, new UtilItem(clone.getItem(slot)).setLore(lore).toItemStack());
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     main.debug(
                             "Invalid booster type on the item in slot " + slot + ", whilst generating the inventory!");
                 }

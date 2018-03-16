@@ -45,7 +45,6 @@ public class Main extends JavaPlugin implements Listener {
     // Future add bar here.
     private BossBar bar_jobs = null;
     private List<Booster> activeBoosters = new ArrayList<>();
-    private Map<String, BoosterType> preloadedTypes = new HashMap<>();
 
     public void onEnable() {
         saveDefaultConfig();
@@ -229,19 +228,12 @@ public class Main extends JavaPlugin implements Listener {
             // Despawn hologram task
             if (spawnHolos) {
                 for (Hologram holo : HologramsAPI.getHolograms(this)) {
-                    if (holo.getCreationTimestamp() + 1500 > System.currentTimeMillis()) {
+                    if (holo.getCreationTimestamp() + 1750 < System.currentTimeMillis()) {
                         holo.delete();
                     }
                 }
             }
         }, 20L, 20L);
-
-        // Lazy solution:
-        preloadedTypes.put(getConfig().getString("Boosters.MINECRAFT.type"), BoosterType.MINECRAFT);
-        preloadedTypes.put(getConfig().getString("Boosters.SKILLAPI.type"), BoosterType.SKILLAPI);
-        preloadedTypes.put(getConfig().getString("Boosters.MCMMO.type"), BoosterType.MCMMO);
-        // Future add preloader here
-        preloadedTypes.put(getConfig().getString("Boosters.JOBS.type"), BoosterType.JOBS);
     }
 
     public void onDisable() {
@@ -529,8 +521,11 @@ public class Main extends JavaPlugin implements Listener {
     public Integer getBoosterAmount(Player player, BoosterType type) {
         String uuid = player.getUniqueId().toString();
         if (storage.contains(uuid + "." + type.name())) {
-            return storage.getInt(uuid + "." + type.name());
+            int stored = storage.getInt(uuid + "." + type.name());
+            debug("The value " + uuid + "." + type.name() + " was fetched to be " + stored);
+            return stored;
         }
+        debug("The player " + player.getName() + " does not have the type " + type.name());
         return 0;
     }
 
@@ -609,13 +604,6 @@ public class Main extends JavaPlugin implements Listener {
         return getConfig().getBoolean("Boosters." + type.name() + ".enabled");
     }
 
-    @Deprecated
-    public BoosterType getBoosterValue(String name) {
-        if (preloadedTypes.containsKey(name)) {
-            return preloadedTypes.get(name);
-        }
-        return null;
-    }
 
     public String getMessage(String path) {
         if (!messages.contains(path)) {

@@ -40,7 +40,7 @@ Boosters:
       # {multiplier-name} is replaced with the word 'Double, Triple, etc.
       hologram-text-when-boosted:
       - '&2[&a+{amount-multiplied} XP&2]'
-      - '&2[{current-multiplier} Experience]'
+      - '&2[{multiplier-name} Experience]'
 
    SKILLAPI:
       enabled: true
@@ -57,7 +57,7 @@ Boosters:
       hologram-when-boosted: true
       hologram-text-when-boosted:
       - '&3[&b+{amount-multiplied} Skill XP&3]'
-      - '&3[{current-multiplier} Experience]'
+      - '&3[{multiplier-name} Experience]'
 
    MCMMO:
       # This booster is disabled by default.
