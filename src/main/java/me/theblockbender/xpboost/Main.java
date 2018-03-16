@@ -118,13 +118,17 @@ public class Main extends JavaPlugin implements Listener {
             // Minecraft
             if (isBoosted(BoosterType.Minecraft)) {
                 if (bar_minecraft == null) {
-                    bar_minecraft = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
-                            config.getString("Boosters.Minecraft.bossbar-message")
-                                    .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
-                                    .replace("{time}", getTimeLeft(BoosterType.Minecraft))
-                                    .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))),
-                            BarColor.valueOf(config.getString("Boosters.Minecraft.bossbar-color").toUpperCase()),
-                            BarStyle.SOLID);
+                    try {
+                        bar_minecraft = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&',
+                                config.getString("Boosters.Minecraft.bossbar-message")
+                                        .replace("{player}", getWhoIsBoosting(BoosterType.Minecraft))
+                                        .replace("{time}", getTimeLeft(BoosterType.Minecraft))
+                                        .replace("{current-multiplier}", getMultiplierName(BoosterType.Minecraft))),
+                                BarColor.valueOf(config.getString("Boosters.Minecraft.bossbar-color").toUpperCase()),
+                                BarStyle.SOLID);
+                    }catch(NullPointerException ex){
+                        ex.printStackTrace();
+                    }
                 }
                 try {
                     bar_minecraft.setTitle(ChatColor.translateAlternateColorCodes('&',
@@ -438,7 +442,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
         }
         if (isPlayerAlreadyUsingThisBooster(type, sender.getName())) {
-            sender.sendMessage(getMessage("command-this-type-active"));
+            sender.sendMessage(getMessage("command-booster-this-type-active"));
             return;
         }
         if (isBoosterMaxed(type, multi)) {
@@ -463,7 +467,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
         }
         if (isPlayerAlreadyUsingThisBooster(type, activator.getName())) {
-            activator.sendMessage(getMessage("command-this-type-active"));
+            activator.sendMessage(getMessage("command-booster-this-type-active"));
             return;
         }
         if (isBoosterMaxed(type, multi)) {
@@ -578,11 +582,10 @@ public class Main extends JavaPlugin implements Listener {
 
     public String getMultiplierName(BoosterType type) {
         int multi = getMultiplier(type);
-        FileConfiguration config = getConfig();
-        if (config.contains("Name-of-the-multiplier." + multi)) {
-            return config.getString("Name-of-the-multiplier." + multi);
+        if (messages.contains("Name-of-the-multiplier." + multi)) {
+            return messages.getString("Name-of-the-multiplier." + multi);
         }
-        return config.getString("Name-of-the-multiplier.other");
+        return messages.getString("Name-of-the-multiplier.other");
     }
 
     private String getTimeLeft(BoosterType type) {

@@ -49,16 +49,32 @@ public class BoosterCommand implements CommandExecutor {
                 BoosterType type = null;
                 if (args[1].equalsIgnoreCase("minecraft")) {
                     type = BoosterType.Minecraft;
+                    if(!main.isBoosterEnabled(BoosterType.Minecraft)){
+                        sender.sendMessage(main.getMessage("event-booster-disabled"));
+                        return true;
+                    }
                 }
                 if (args[1].equalsIgnoreCase("skillapi")) {
                     type = BoosterType.SkillAPI;
+                    if(!main.isBoosterEnabled(BoosterType.SkillAPI)){
+                        sender.sendMessage(main.getMessage("event-booster-disabled"));
+                        return true;
+                    }
                 }
                 if (args[1].equalsIgnoreCase("mcmmo")) {
                     type = BoosterType.McMMO;
+                    if(!main.isBoosterEnabled(BoosterType.McMMO)){
+                        sender.sendMessage(main.getMessage("event-booster-disabled"));
+                        return true;
+                    }
                 }
                 // Future add argument-type here
                 if (args[1].equalsIgnoreCase("jobs")) {
                     type = BoosterType.Jobs;
+                    if(!main.isBoosterEnabled(BoosterType.Jobs)){
+                        sender.sendMessage(main.getMessage("event-booster-disabled"));
+                        return true;
+                    }
                 }
                 if (type == null) {
                     sender.sendMessage(main.getMessage("command-invalid-type"));
@@ -86,16 +102,32 @@ public class BoosterCommand implements CommandExecutor {
         BoosterType type = null;
         if (args[2].equalsIgnoreCase("minecraft")) {
             type = BoosterType.Minecraft;
+            if(!main.isBoosterEnabled(BoosterType.Minecraft)){
+                sender.sendMessage(main.getMessage("event-booster-disabled"));
+                return true;
+            }
         }
         if (args[2].equalsIgnoreCase("skillapi")) {
             type = BoosterType.SkillAPI;
+            if(!main.isBoosterEnabled(BoosterType.SkillAPI)){
+                sender.sendMessage(main.getMessage("event-booster-disabled"));
+                return true;
+            }
         }
         if (args[2].equalsIgnoreCase("mcmmo")) {
             type = BoosterType.McMMO;
+            if(!main.isBoosterEnabled(BoosterType.McMMO)){
+                sender.sendMessage(main.getMessage("event-booster-disabled"));
+                return true;
+            }
         }
         // Future add argument-type here
         if (args[2].equalsIgnoreCase("jobs")) {
             type = BoosterType.Jobs;
+            if(!main.isBoosterEnabled(BoosterType.Jobs)){
+                sender.sendMessage(main.getMessage("event-booster-disabled"));
+                return true;
+            }
         }
         if (type == null) {
             sender.sendMessage(main.getMessage("command-invalid-type"));
