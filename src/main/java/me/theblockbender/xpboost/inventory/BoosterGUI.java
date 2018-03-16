@@ -113,7 +113,7 @@ public class BoosterGUI {
     }
 
     public void open(Player player) {
-        Inventory clone =  Bukkit.createInventory(null, gui.getSize(), gui.getName());
+        Inventory clone = Bukkit.createInventory(null, gui.getSize(), gui.getName());
         clone.setContents(gui.getContents());
         for (int slot = 10; slot < clone.getSize(); slot++) {
             ItemStack item = clone.getItem(slot);

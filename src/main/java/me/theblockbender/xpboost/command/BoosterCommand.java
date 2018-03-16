@@ -36,7 +36,7 @@ public class BoosterCommand implements CommandExecutor {
                 return true;
             }
         }
-        if(args.length == 2){
+        if (args.length == 2) {
             if (args[0].equalsIgnoreCase("boost")) {
                 if (!isPlayer) {
                     sender.sendMessage(main.getMessage("command-from-console"));
@@ -49,21 +49,21 @@ public class BoosterCommand implements CommandExecutor {
                 BoosterType type = null;
                 if (args[1].equalsIgnoreCase("minecraft")) {
                     type = BoosterType.MINECRAFT;
-                    if(!main.isBoosterEnabled(BoosterType.MINECRAFT)){
+                    if (!main.isBoosterEnabled(BoosterType.MINECRAFT)) {
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
                 }
                 if (args[1].equalsIgnoreCase("skillapi")) {
                     type = BoosterType.SKILLAPI;
-                    if(!main.isBoosterEnabled(BoosterType.SKILLAPI)){
+                    if (!main.isBoosterEnabled(BoosterType.SKILLAPI)) {
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
                 }
                 if (args[1].equalsIgnoreCase("mcmmo")) {
                     type = BoosterType.MCMMO;
-                    if(!main.isBoosterEnabled(BoosterType.MCMMO)){
+                    if (!main.isBoosterEnabled(BoosterType.MCMMO)) {
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
@@ -71,7 +71,7 @@ public class BoosterCommand implements CommandExecutor {
                 // Future add argument-type here
                 if (args[1].equalsIgnoreCase("jobs")) {
                     type = BoosterType.JOBS;
-                    if(!main.isBoosterEnabled(BoosterType.JOBS)){
+                    if (!main.isBoosterEnabled(BoosterType.JOBS)) {
                         sender.sendMessage(main.getMessage("event-booster-disabled"));
                         return true;
                     }
@@ -92,7 +92,7 @@ public class BoosterCommand implements CommandExecutor {
         }
         String subcommand = args[0].toLowerCase();
         Player player = null;
-        if (subcommand.equalsIgnoreCase("give") || subcommand.equalsIgnoreCase("take")|| subcommand.equalsIgnoreCase("reset")) {
+        if (subcommand.equalsIgnoreCase("give") || subcommand.equalsIgnoreCase("take") || subcommand.equalsIgnoreCase("reset")) {
             player = Bukkit.getPlayer(args[1]);
             if (player == null) {
                 sender.sendMessage(main.getMessage("command-player-not-online").replace("{player}", args[1]));
@@ -102,21 +102,21 @@ public class BoosterCommand implements CommandExecutor {
         BoosterType type = null;
         if (args[2].equalsIgnoreCase("minecraft")) {
             type = BoosterType.MINECRAFT;
-            if(!main.isBoosterEnabled(BoosterType.MINECRAFT)){
+            if (!main.isBoosterEnabled(BoosterType.MINECRAFT)) {
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
         }
         if (args[2].equalsIgnoreCase("skillapi")) {
             type = BoosterType.SKILLAPI;
-            if(!main.isBoosterEnabled(BoosterType.SKILLAPI)){
+            if (!main.isBoosterEnabled(BoosterType.SKILLAPI)) {
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
         }
         if (args[2].equalsIgnoreCase("mcmmo")) {
             type = BoosterType.MCMMO;
-            if(!main.isBoosterEnabled(BoosterType.MCMMO)){
+            if (!main.isBoosterEnabled(BoosterType.MCMMO)) {
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }
@@ -124,7 +124,7 @@ public class BoosterCommand implements CommandExecutor {
         // Future add argument-type here
         if (args[2].equalsIgnoreCase("jobs")) {
             type = BoosterType.JOBS;
-            if(!main.isBoosterEnabled(BoosterType.JOBS)){
+            if (!main.isBoosterEnabled(BoosterType.JOBS)) {
                 sender.sendMessage(main.getMessage("event-booster-disabled"));
                 return true;
             }

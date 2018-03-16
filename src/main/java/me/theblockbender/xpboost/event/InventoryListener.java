@@ -2,7 +2,6 @@ package me.theblockbender.xpboost.event;
 
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
@@ -66,13 +65,13 @@ public class InventoryListener implements Listener {
         }
         player.playSound(player.getLocation(), Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.2f, 1f);
         main.clickCooldown.put(uuid, System.currentTimeMillis() + 500);
-        Material bottle  = main.getGuiMaterial("gui-booster.material");
+        Material bottle = main.getGuiMaterial("gui-booster.material");
         Material chest = main.getGuiMaterial("gui-shop.material");
         Material barrier = main.getGuiMaterial("gui-exit.material");
         if (item.getType() == bottle) {
-            if(!item.hasItemMeta())
+            if (!item.hasItemMeta())
                 return;
-            if(!item.getItemMeta().hasLore())
+            if (!item.getItemMeta().hasLore())
                 return;
             List<String> lore = item.getItemMeta().getLore();
             BoosterType type = BoosterType.valueOf(lore.get(lore.size() - 1).replace("§8booster:", "").toUpperCase());
@@ -80,7 +79,7 @@ public class InventoryListener implements Listener {
             player.closeInventory();
             return;
         }
-        if (item.getType() ==  chest) {
+        if (item.getType() == chest) {
             player.sendMessage(main.getMessage("store-divider"));
             player.sendMessage(" ");
             player.sendMessage(main.getMessage("store-url"));

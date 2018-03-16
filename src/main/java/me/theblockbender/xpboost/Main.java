@@ -125,7 +125,7 @@ public class Main extends JavaPlugin implements Listener {
                                         .replace("{current-multiplier}", getMultiplierName(BoosterType.MINECRAFT))),
                                 BarColor.valueOf(config.getString("Boosters.MINECRAFT.bossbar-color").toUpperCase()),
                                 BarStyle.SOLID);
-                    }catch(NullPointerException ex){
+                    } catch (NullPointerException ex) {
                         ex.printStackTrace();
                     }
                 }
