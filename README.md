@@ -7,7 +7,7 @@ This plugin boosts regular Minecraft experience, SkillAPI experience, mcMMO expe
 
 # Features
 * **Supporting many plugins** - You can enable / disable every type of booster.
-* **Extreme customizability** - Any message, bossbar, hologram, gui can be modified to your liking and translated into every laguage!
+* **Extreme customizability** - Any message, bossbar, hologram, gui can be modified to your liking and translated into every language!
 * **Multiplier variation** - You can make your boosters simply 'double' experience, but what about insane rates? Go for a booster that multiplies global experience by a 100!
 * **Stackable multipliers** - You can make boosters stackable, which means that when two players activate a 2x minecraft booster, the boosters will turn into a 4x multiplier!
 * **Bossbars, Holograms** - Notify players about active boosters on the bossbars, and let them know how much experience was dropped when a mob is killed via holograms!
