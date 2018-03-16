@@ -3,6 +3,7 @@ package me.theblockbender.xpboost.event;
 import me.theblockbender.xpboost.Main;
 import me.theblockbender.xpboost.util.BoosterType;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.List;
 import java.util.UUID;
 
 public class InventoryListener implements Listener {
@@ -64,38 +66,32 @@ public class InventoryListener implements Listener {
         }
         player.playSound(player.getLocation(), Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.2f, 1f);
         main.clickCooldown.put(uuid, System.currentTimeMillis() + 500);
-        switch (item.getType()) {
-            case EXP_BOTTLE:
-                //fixme
-                if (ChatColor.stripColor(item.getItemMeta().getLore().get(4)).contains(" 0 ")) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 0.3f, 1f);
-                    player.sendMessage(main.getMessage("command-no-booster"));
-                    return;
-                }
-                BoosterType booster;
-                String name = ChatColor.stripColor(item.getItemMeta().getDisplayName()).replace("Activate a ", "").replace(" Experience Booster", "");
-                booster = main.getBoosterValue(name);
-                if (booster == null) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 0.3f, 1f);
-                    player.sendMessage(main.getMessage("event-bugreport"));
-                    return;
-                }
-                main.tryActivateBooster(player, booster);
-                player.closeInventory();
+        Material bottle  = main.getGuiMaterial("gui-booster.material");
+        Material chest = main.getGuiMaterial("gui-shop.material");
+        Material barrier = main.getGuiMaterial("gui-exit.material");
+        if (item.getType() == bottle) {
+            if(!item.hasItemMeta())
                 return;
-            case CHEST:
-                player.sendMessage(main.getMessage("store-divider"));
-                player.sendMessage(" ");
-                player.sendMessage(main.getMessage("store-url"));
-                player.sendMessage(main.getMessage("store-info"));
-                player.sendMessage(" ");
-                player.sendMessage(main.getMessage("store-divider"));
-                player.closeInventory();
+            if(!item.getItemMeta().hasLore())
                 return;
-            case BARRIER:
-                player.closeInventory();
-                return;
-            default:
+            List<String> lore = item.getItemMeta().getLore();
+            BoosterType type = BoosterType.valueOf(lore.get(lore.size() - 1).replace("§8booster:", "").toUpperCase());
+            main.tryActivateBooster(player, type);
+            player.closeInventory();
+            return;
+        }
+        if (item.getType() ==  chest) {
+            player.sendMessage(main.getMessage("store-divider"));
+            player.sendMessage(" ");
+            player.sendMessage(main.getMessage("store-url"));
+            player.sendMessage(main.getMessage("store-info"));
+            player.sendMessage(" ");
+            player.sendMessage(main.getMessage("store-divider"));
+            player.closeInventory();
+            return;
+        }
+        if (item.getType() == barrier) {
+            player.closeInventory();
         }
     }
 }

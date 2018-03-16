@@ -20,7 +20,7 @@ command-from-console: "&4Error: &cThis action can only be performed by a player!
 # Placeholders: {player} - player name specified in the command.
 command-player-not-online: "&4Error: &cThe player {player} is not online!"
 command-invalid-type: "&4Error: &cThat booster type does not exist!"
-command-available-types: "&4Available types: [&cMinecraft&4,&c SKILLAPI&4, &cmcMMO&4,&c JOBS&4]"
+command-available-types: "&4Available types: [&cMinecraft&4,&c SkillAPI&4, &cmcMMO&4,&c Jobs&4]"
 # Placeholders: {time} - duration specified in the command.
 command-invalid-duration: "&4Error:&c {time} is not a valid duration!"
 # Placeholders: {amount} - amount specified in the command.

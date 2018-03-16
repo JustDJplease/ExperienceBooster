@@ -609,6 +609,7 @@ public class Main extends JavaPlugin implements Listener {
         return getConfig().getBoolean("Boosters." + type.name() + ".enabled");
     }
 
+    @Deprecated
     public BoosterType getBoosterValue(String name) {
         if (preloadedTypes.containsKey(name)) {
             return preloadedTypes.get(name);
