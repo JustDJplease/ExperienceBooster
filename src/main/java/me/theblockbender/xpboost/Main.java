@@ -77,32 +77,32 @@ public class Main extends JavaPlugin implements Listener {
             debug("Activated MC Listener");
         }
         if (isBoosterEnabled(BoosterType.SKILLAPI)) {
-            Plugin skill = pm.getPlugin("SKILLAPI");
+            Plugin skill = pm.getPlugin("SkillAPI");
             if (skill != null) {
                 pm.registerEvents(new SkillAPIListener(this), this);
-                debug("Activated SKILLAPI Listener");
+                debug("Activated SkillAPI Listener");
             } else {
                 getLogger().warning(
-                        "You cannot enable 'SKILLAPI' multiplication if you do not have 'SKILLAPI' installed!");
+                        "You cannot enable 'SkillAPI' multiplication if you do not have 'SkillAPI' installed!");
             }
         }
         if (isBoosterEnabled(BoosterType.MCMMO)) {
             Plugin skill = pm.getPlugin("mcMMO");
             if (skill != null) {
                 pm.registerEvents(new mcMMOListener(this), this);
-                debug("Activated MCMMO Listener");
+                debug("Activated mcMMO Listener");
             } else {
-                getLogger().warning("You cannot enable 'MCMMO' multiplication if you do not have 'MCMMO' installed!");
+                getLogger().warning("You cannot enable 'mcMMO' multiplication if you do not have 'mcMMO' installed!");
             }
         }
         // Future Add enabled check here
         if (isBoosterEnabled(BoosterType.JOBS)) {
-            Plugin skill = pm.getPlugin("JOBS");
+            Plugin skill = pm.getPlugin("Jobs");
             if (skill != null) {
                 pm.registerEvents(new JobsListener(this), this);
-                debug("Activated JOBS Listener");
+                debug("Activated Jobs Listener");
             } else {
-                getLogger().warning("You cannot enable 'JOBS' multiplication if you do not have 'JOBS' installed!");
+                getLogger().warning("You cannot enable 'Jobs' multiplication if you do not have 'Jobs' installed!");
             }
         }
         getCommand("xpboost").setExecutor(new BoosterCommand(this));

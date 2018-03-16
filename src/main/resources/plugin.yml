@@ -1,11 +1,11 @@
 name: ExperienceBoost
 main: me.theblockbender.xpboost.Main
-description: Experience multiplication perk for MINECRAFT, SKILLAPI and MCMMO!
+description: Experience multiplication perk!
 author: TheBlockBender
 authors: [NonameSL]
 permission-message: You are not allowed to do this!
 version: ${version}
-softdepend: [SKILLAPI, mcMMO, JOBS, HolographicDisplays]
+softdepend: [SkillAPI, mcMMO, Jobs, HolographicDisplays]
 
 commands:
   xpboost:
