@@ -12,6 +12,14 @@ This plugin boosts regular Minecraft experience, SkillAPI experience, mcMMO expe
 * **Stackable multipliers** - You can make boosters stackable, which means that when two players activate a 2x minecraft booster, the boosters will turn into a 4x multiplier!
 * **Bossbars, Holograms** - Notify players about active boosters on the bossbars, and let them know how much experience was dropped when a mob is killed via holograms!
 
+# Commands and Permissions
+** /xpboost** (xpboost.player) opens up the booster GUI for the player.
+** /xpboost give <player> <type> [amount]** (xpboost.admin) give a booster to a player.
+** /xpboost take <player> <type> [amount]** (xpboost.admin) take a booster from a player.
+** /xpboost reset <player> <type>** (xpboost.admin) set the amount of boosters for that player to 0.
+** /xpboost boost <type>** (xpboost.admin) starts a booster of the given type.
+Aliases: [expboost, xpperk, expperk]
+
 # Dependencies
 **Required** Spigot 1.12 or newer.
 *This plugin will always support the latest version of spigot. It has not been tested on previous versions of the game. Please do not ask me to add support for anything earlier than the latest version of spigot!*
