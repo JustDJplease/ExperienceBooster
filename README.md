@@ -14,7 +14,7 @@ This plugin boosts regular Minecraft experience, SkillAPI experience, mcMMO expe
 
 # Commands and Permissions
 * `/xpboost` (xpboost.player) opens up the booster GUI for the player.
-* `/xpboost give** <player> <type> [amount]` (xpboost.admin) give a booster to a player.
+* `/xpboost give <player> <type> [amount]` (xpboost.admin) give a booster to a player.
 * `/xpboost take <player> <type> [amount]` (xpboost.admin) take a booster from a player.
 * `/xpboost reset <player> <type>` (xpboost.admin) set the amount of boosters for that player to 0.
 * `/xpboost boost <type>` (xpboost.admin) starts a booster of the given type.
