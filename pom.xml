@@ -7,6 +7,17 @@
     <groupId>me.theblockbender</groupId>
     <artifactId>experiencebooster</artifactId>
     <version>0.7</version>
+
+    <properties>
+        <!-- Encoding Properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+
+        <!-- Environment -->
+        <environment.java-version>1.8</environment.java-version>
+        <environment.maven-version>3.3.9</environment.maven-version>
+    </properties>
+    
     <repositories>
         <repository>
             <id>local-repo</id>
