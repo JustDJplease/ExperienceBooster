@@ -18,48 +18,47 @@
             <url>https://ci.filoghost.me/plugin/repository/everything/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
             <artifactId>holographicdisplays-api</artifactId>
-            <version>2.2.7-SNAPSHOT</version>
+            <version>2.3.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.gamingmesh</groupId>
             <artifactId>jobs</artifactId>
-            <version>4.3.1</version>
+            <version>4.9.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.gmail</groupId>
             <artifactId>nossr50</artifactId>
-            <version>1.5.09-SNAPSHOT</version>
+            <version>1.6.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sucy</groupId>
             <artifactId>skill</artifactId>
-            <version>3.103</version>
+            <version>3.108</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
