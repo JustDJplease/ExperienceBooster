@@ -19,7 +19,7 @@ public class BottleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBottleThrow(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
-        if (item == null || item.getType() != Material.EXP_BOTTLE) {
+        if (item == null || item.getType() != Material.EXPERIENCE_BOTTLE) {
             return;
         }
         if (main.isBoosted(BoosterType.MINECRAFT)

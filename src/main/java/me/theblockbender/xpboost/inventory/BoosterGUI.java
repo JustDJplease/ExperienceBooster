@@ -143,6 +143,6 @@ public class BoosterGUI {
         }
         player.openInventory(clone);
         main.openInventories.add(player.getUniqueId());
-        player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1f, 0.7f);
+        player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 0.7f);
     }
 }

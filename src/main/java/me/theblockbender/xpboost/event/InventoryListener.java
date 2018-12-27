@@ -63,7 +63,7 @@ public class InventoryListener implements Listener {
             player.sendMessage(main.getMessage("event-wrong-inventory"));
             return;
         }
-        player.playSound(player.getLocation(), Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.2f, 1f);
+        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_ROTATE_ITEM, 0.2f, 1f);
         main.clickCooldown.put(uuid, System.currentTimeMillis() + 500);
         Material bottle = main.getGuiMaterial("gui-booster.material");
         Material chest = main.getGuiMaterial("gui-shop.material");
