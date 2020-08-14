@@ -1,13 +1,26 @@
-name: ExperienceBoost
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
 main: me.theblockbender.xpboost.Main
-description: Experience multiplication perk!
-author: TheBlockBender
-authors: [NonameSL]
-permission-message: You are not allowed to do this!
-version: ${version}
-softdepend: [SkillAPI, mcMMO, Jobs, HolographicDisplays]
+api-version: 1.16
+authors: [Newt]
+softdepend: [mcMMO, Jobs]
+website: https://github.com/JustDJplease/ExperienceBooster
 
 commands:
-  xpboost:
-    description: Show your experience boosters!
-    aliases: [expboost, xpperk, expperk]
+  multiplier:
+    description: Manage your multipliers and activate boosts.
+    permission: multiplier.menu
+
+permissions:
+  multiplier.*:
+    description: Root permission for all commands and features.
+    children:
+      multiplier.user: true
+      multipler.admin: true
+  multiplier.user:
+    description: Manage your multipliers and activate boosts.
+    default: true
+  multiplier.admin:
+    description: Manage multipliers of others.
+    default: op

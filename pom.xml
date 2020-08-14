@@ -4,68 +4,48 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.theblockbender</groupId>
-    <artifactId>experiencebooster</artifactId>
-    <version>0.7</version>
+    <groupId>me.newt</groupId>
+    <artifactId>multiplier</artifactId>
+    <name>ExperienceMultiplier</name>
+    <version>MC-1.16.1</version>
+    <description>Multipliers that boost the experience gained by all online players.</description>
 
     <repositories>
+        <!-- Spigot -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <repository>
-            <id>holographic-repo</id>
-            <url>https://ci.filoghost.me/plugin/repository/everything/</url>
-        </repository>
     </repositories>
 
     <dependencies>
+        <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-            <artifactId>holographicdisplays-api</artifactId>
-            <version>2.2.7-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+        <!-- Optional dependency: Jobs -->
+        <!-- No repository available. -->
         <dependency>
             <groupId>com.gamingmesh</groupId>
             <artifactId>jobs</artifactId>
-            <version>4.3.1</version>
+            <version>4.16.0</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Optional dependency: mcMMO -->
+        <!-- No repository available. -->
         <dependency>
             <groupId>com.gmail</groupId>
             <artifactId>nossr50</artifactId>
-            <version>1.5.09-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sucy</groupId>
-            <artifactId>skill</artifactId>
-            <version>3.103</version>
+            <version>2.1.141</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>ExperienceBooster</finalName>
+        <finalName>${project.name} - ${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
@@ -73,10 +53,9 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
-                    <include>plugin.yml</include>
-                    <include>config.yml</include>
-                    <include>language.yml</include>
-                    <include>playerdata.yml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.zip</include>
                 </includes>
             </resource>
         </resources>
@@ -92,5 +71,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
