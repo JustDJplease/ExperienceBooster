@@ -1,7 +1,7 @@
 name: ${project.name}
 version: ${project.version}
 description: ${project.description}
-main: me.theblockbender.xpboost.Main
+main: me.newt.multiplier.MultiplierPlugin
 api-version: 1.16
 authors: [Newt]
 softdepend: [mcMMO, Jobs]

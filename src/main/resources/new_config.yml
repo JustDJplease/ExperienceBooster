@@ -1,0 +1,16 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#                    ExperienceBooster Settings                   #
+#                              by Newt                            #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+
+# Database option that should be used.
+# Options: "MYSQL" (separate server), "SQLITE" (local file).
+database_option: "SQLITE"
+
+# Credentials of a MYSQL database.
+# Only required when using a MYSQL database.
+database_host: "localhost"
+database_port: "3306"
+database_name: "the_database_name"
+database_username: "username"
+database_password: "password"
