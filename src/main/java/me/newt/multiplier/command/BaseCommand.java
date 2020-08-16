@@ -33,6 +33,11 @@ public class BaseCommand implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+        if(args.length > 0){
+            if(args[0].equalsIgnoreCase("admin")){
+                adminCommand.run(commandSender);
+            }
+        }
         // TODO
         return true;
     }

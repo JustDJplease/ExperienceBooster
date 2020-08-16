@@ -1,12 +1,15 @@
 package me.newt.multiplier;
 
+import me.newt.multiplier.data.DatabaseAPI;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class MultiplierPlugin extends JavaPlugin {
 
     public MultiplierAPI multiplierAPI;
+    public DatabaseAPI databaseAPI;
 
     /*
      * TODO Files in the plugin directory:
@@ -20,7 +23,11 @@ public class MultiplierPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-
+        try {
+            databaseAPI = new DatabaseAPI(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

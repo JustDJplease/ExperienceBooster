@@ -50,18 +50,18 @@ public class SQLite extends Database {
     public void setup() {
         openConnection();
         try {
-            Statement s = connection.createStatement();
-            String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS multipliers (" +
+            Statement statement = connection.createStatement();
+            String query = "CREATE TABLE IF NOT EXISTS multipliers (" +
                     "'id' INT NOT NULL AUTO_INCREMENT," +
                     "'uuid' VARCHAR NOT NULL," +
                     "'type' VARCHAR NOT NULL," +
                     "'duration' INT NOT NULL," +
                     "'multiplier' INT NOT NULL," +
                     "PRIMARY KEY ('id'));";
-            s.executeUpdate(SQLiteCreateTokensTable);
-            s.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            statement.executeUpdate(query);
+            statement.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
         closeConnection();
     }
