@@ -10,7 +10,7 @@ website: https://github.com/JustDJplease/ExperienceBooster
 commands:
   multiplier:
     description: Manage your multipliers and activate boosts.
-    permission: multiplier.menu
+    permission: multiplier.user
 
 permissions:
   multiplier.*:

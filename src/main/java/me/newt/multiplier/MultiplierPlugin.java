@@ -11,6 +11,10 @@ public class MultiplierPlugin extends JavaPlugin {
     public MultiplierAPI multiplierAPI;
     public DatabaseAPI databaseAPI;
 
+    public boolean dependencyJobsLoaded;
+    public boolean dependencyMcMMOLoaded;
+    public boolean dependencyPAPILoaded;
+
     /*
      * TODO Files in the plugin directory:
      * /plugins/ExperienceMultiplier/config.yml

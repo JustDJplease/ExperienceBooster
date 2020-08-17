@@ -14,3 +14,17 @@ database_port: "3306"
 database_name: "the_database_name"
 database_username: "username"
 database_password: "password"
+
+# Should active multipliers be displayed on the boss-bar?
+# Boss-bars can have custom bar colors. Options: "BLUE", "GREEN", "PINK", "PURPLE", "RED", "WHITE", "YELLOW".
+bossbar_enabled: true
+bossbar_color_minecraft: "GREEN"
+bossbar_color_jobs: "YELLOW"
+bossbar_color_mcmmo: "PURPLE"
+
+# Should active multipliers be displayed on the action-bar?
+actionbar_enabled: false
+
+# Should this plugin prevent players from throwing experience potions when a minecraft booster is active?
+# You should only enable this if your players can withdraw experience into experience potions.
+patch_experience_potions: false
