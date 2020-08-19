@@ -1,5 +1,6 @@
 package me.newt.multiplier.command.subcommands.admin;
 
+import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.command.SubCommand;
 import me.newt.multiplier.util.UtilArgumentParsers;
 import org.bukkit.command.CommandSender;
@@ -8,13 +9,16 @@ import java.util.UUID;
 
 public class ListCommand extends SubCommand {
 
+    private final MultiplierPlugin multiplierPlugin;
     private final String permission;
 
     /**
      * Constructor.
-     * @param permission Permission required to run this command.
+     * @param multiplierPlugin Instance of the main class.
+     * @param permission       Permission required to run this command.
      */
-    public ListCommand(String permission) {
+    public ListCommand(MultiplierPlugin multiplierPlugin, String permission) {
+        this.multiplierPlugin = multiplierPlugin;
         this.permission = permission;
     }
 
@@ -45,8 +49,8 @@ public class ListCommand extends SubCommand {
             return;
         }
 
-        // TODO LIST MULTIPLIERS
-        return;
+        sender.sendMessage("§7Listing multipliers for " + uuid.toString() + " (§f" + unValidatedReceiver + "§7):");
+        multiplierPlugin.getMultiplierAPI().getMultipliers(uuid).forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
     }
 
     /**

@@ -15,6 +15,10 @@ public class SQLite extends Database {
     private final File databaseFile;
     private Connection connection;
 
+    /**
+     * Constructor.
+     * @param multiplierPlugin Instance of the main class.
+     */
     public SQLite(MultiplierPlugin multiplierPlugin) throws IOException {
         databaseFile = new File(multiplierPlugin.getDataFolder().getPath() + "data", "userdata.db");
         if (!databaseFile.exists()) {
@@ -23,6 +27,9 @@ public class SQLite extends Database {
         }
     }
 
+    /**
+     * Start a new connection to the database. Make sure to call {@link #closeConnection()} when done!
+     */
     @Override
     public Connection openConnection() {
         connection = null;
@@ -35,6 +42,9 @@ public class SQLite extends Database {
         return connection;
     }
 
+    /**
+     * Close the connection to a database.
+     */
     @Override
     public void closeConnection() {
         try {
@@ -46,6 +56,9 @@ public class SQLite extends Database {
         }
     }
 
+    /**
+     * Prepare the database for its first use.
+     */
     @Override
     public void setup() {
         openConnection();

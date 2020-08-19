@@ -13,7 +13,10 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 public class BaseCommand implements CommandExecutor {
 
@@ -35,16 +38,23 @@ public class BaseCommand implements CommandExecutor {
         this.multiplierPlugin = multiplierPlugin;
 
         // User subcommands:
-        this.menuCMD = new MenuCommand("multiplier.user.activate");
-        this.thankCMD = new ThankCommand("multiplier.user.thank");
+        this.menuCMD = new MenuCommand(multiplierPlugin, "multiplier.user.activate");
+        this.thankCMD = new ThankCommand(multiplierPlugin, "multiplier.user.thank");
 
         // Admin subcommands:
-        this.giveCMD = new GiveCommand("multiplier.admin.give");
-        this.listCMD = new ListCommand("multiplier.admin.list");
-        this.reloadCMD = new ReloadCommand("multiplier.admin.reload");
-        this.removeCMD = new RemoveCommand("multiplier.admin.remove");
-        this.startCMD = new StartCommand("multiplier.admin.start");
-        this.stopCMD = new StopCommand("multiplier.admin.stop");
+        this.giveCMD = new GiveCommand(multiplierPlugin, "multiplier.admin.give");
+        this.listCMD = new ListCommand(multiplierPlugin, "multiplier.admin.list");
+        this.reloadCMD = new ReloadCommand(multiplierPlugin, "multiplier.admin.reload");
+        this.removeCMD = new RemoveCommand(multiplierPlugin, "multiplier.admin.remove");
+        this.startCMD = new StartCommand(multiplierPlugin, "multiplier.admin.start");
+        this.stopCMD = new StopCommand(multiplierPlugin, "multiplier.admin.stop");
+
+        PluginCommand command = multiplierPlugin.getCommand("multiplier");
+        if (command == null) {
+            multiplierPlugin.log(Level.SEVERE, "Failed to initialize root command.");
+            return;
+        }
+        command.setExecutor(this);
     }
 
     /**

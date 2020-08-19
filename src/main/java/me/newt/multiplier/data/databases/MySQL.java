@@ -18,7 +18,10 @@ public class MySQL extends Database {
     private final String user;
     private final String pass;
 
-
+    /**
+     * Constructor.
+     * @param multiplierPlugin Instance of the main class.
+     */
     public MySQL(MultiplierPlugin multiplierPlugin) {
         FileConfiguration config = multiplierPlugin.getConfig();
         host = config.getString("database_host");
@@ -34,6 +37,9 @@ public class MySQL extends Database {
         assert pass != null : "Database credentials (password) in config.yml cannot be null!";
     }
 
+    /**
+     * Start a new connection to the database. Make sure to call {@link #closeConnection()} when done!
+     */
     @Override
     public Connection openConnection() {
         connection = null;
@@ -46,6 +52,9 @@ public class MySQL extends Database {
         return connection;
     }
 
+    /**
+     * Close the connection to a database.
+     */
     @Override
     public void closeConnection() {
         try {
@@ -57,6 +66,9 @@ public class MySQL extends Database {
         }
     }
 
+    /**
+     * Prepare the database for its first use.
+     */
     @Override
     public void setup() {
         openConnection();

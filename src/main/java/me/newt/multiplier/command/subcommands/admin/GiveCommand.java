@@ -1,5 +1,7 @@
 package me.newt.multiplier.command.subcommands.admin;
 
+import me.newt.multiplier.Multiplier;
+import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.MultiplierType;
 import me.newt.multiplier.command.SubCommand;
 import me.newt.multiplier.util.UtilArgumentParsers;
@@ -9,13 +11,16 @@ import java.util.UUID;
 
 public class GiveCommand extends SubCommand {
 
+    private final MultiplierPlugin multiplierPlugin;
     private final String permission;
 
     /**
      * Constructor.
-     * @param permission Permission required to run this command.
+     * @param multiplierPlugin Instance of the main class.
+     * @param permission       Permission required to run this command.
      */
-    public GiveCommand(String permission) {
+    public GiveCommand(MultiplierPlugin multiplierPlugin, String permission) {
+        this.multiplierPlugin = multiplierPlugin;
         this.permission = permission;
     }
 
@@ -68,8 +73,9 @@ public class GiveCommand extends SubCommand {
             return;
         }
 
-        // TODO GIVE MULTIPLIER
-        return;
+        sender.sendMessage("§7Giving " + uuid.toString() + " (§f" + unValidatedReceiver + "§7) a §f" + type.getCapitalizedName() + " §7multiplier.");
+        Multiplier multiplier = new Multiplier(-999, type, duration, strength);
+        multiplierPlugin.getMultiplierAPI().giveMultiplier(multiplier, uuid);
     }
 
 

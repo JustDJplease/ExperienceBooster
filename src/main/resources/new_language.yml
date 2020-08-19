@@ -4,7 +4,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
 # Some messages use placeholders ({0}, {1}, ...). These are later replaced by the plugin automagically.
-# Color codes can be used in this file. Use simple color codes (&0, &f, &l) or hex-color codes (&#000000, &#ffffff).
+# Color codes can be used in this file. Use simple color codes (&0, &f, &l) or hex-color codes (<#000000>, <#ffffff>).
 
 # Command descriptions shown in the help menu.
 command_description_menu: "View and activate your multipliers."

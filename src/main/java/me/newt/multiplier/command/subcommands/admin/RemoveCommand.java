@@ -1,18 +1,22 @@
 package me.newt.multiplier.command.subcommands.admin;
 
+import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.command.SubCommand;
 import me.newt.multiplier.util.UtilArgumentParsers;
 import org.bukkit.command.CommandSender;
 
 public class RemoveCommand extends SubCommand {
 
+    private final MultiplierPlugin multiplierPlugin;
     private final String permission;
 
     /**
      * Constructor.
-     * @param permission Permission required to run this command.
+     * @param multiplierPlugin Instance of the main class.
+     * @param permission       Permission required to run this command.
      */
-    public RemoveCommand(String permission) {
+    public RemoveCommand(MultiplierPlugin multiplierPlugin, String permission) {
+        this.multiplierPlugin = multiplierPlugin;
         this.permission = permission;
     }
 
@@ -47,8 +51,8 @@ public class RemoveCommand extends SubCommand {
             return;
         }
 
-        // TODO REMOVE ID
-        return;
+        sender.sendMessage("§7Removing a multiplier with id §f" + id + "§7.");
+        multiplierPlugin.getMultiplierAPI().removeMultiplier(id);
     }
 
     /**

@@ -18,14 +18,13 @@ public class DatabaseAPI {
 
     private final MultiplierPlugin multiplierPlugin;
     private final BukkitScheduler scheduler;
-    private final Database database;
+    private Database database;
 
     /**
      * Constructor.
      * @param multiplierPlugin Instance of the main class.
-     * @throws IOException Thrown when a SQLite file cannot be created for whatever reason.
      */
-    public DatabaseAPI(MultiplierPlugin multiplierPlugin) throws IOException {
+    public DatabaseAPI(MultiplierPlugin multiplierPlugin) {
         this.multiplierPlugin = multiplierPlugin;
         this.scheduler = multiplierPlugin.getServer().getScheduler();
 
@@ -36,13 +35,25 @@ public class DatabaseAPI {
             database = new MySQL(multiplierPlugin);
             multiplierPlugin.log(Level.INFO, "Using MySQL to store data.");
         } else if (option.equalsIgnoreCase("SQLITE")) {
-            database = new SQLite(multiplierPlugin);
+            try {
+                database = new SQLite(multiplierPlugin);
+            } catch (IOException exception) {
+                multiplierPlugin.log(Level.SEVERE, "Failed to initialize SQLite database.");
+                exception.printStackTrace();
+            }
             multiplierPlugin.log(Level.INFO, "Using SQLite to store data.");
         } else {
-            database = new SQLite(multiplierPlugin);
+            try {
+                database = new SQLite(multiplierPlugin);
+            } catch (IOException exception) {
+                multiplierPlugin.log(Level.SEVERE, "Failed to initialize SQLite database.");
+                exception.printStackTrace();
+            }
             multiplierPlugin.log(Level.WARNING, "Database option in config.yml is configured incorrectly. Falling back to SQLite.");
         }
-        scheduler.runTaskAsynchronously(multiplierPlugin, database::setup);
+        if (database != null) {
+            scheduler.runTaskAsynchronously(multiplierPlugin, database::setup);
+        }
     }
 
     /**
@@ -53,6 +64,8 @@ public class DatabaseAPI {
     public void addMultiplier(UUID uuid, Multiplier multiplier) {
         scheduler.runTaskAsynchronously(multiplierPlugin, () -> {
             Connection connection = database.openConnection();
+
+            // Add entry
             try {
                 PreparedStatement statement = connection.prepareStatement("REPLACE INTO multipliers (uuid,type,duration,multiplier) VALUES(?,?,?,?);");
                 statement.setString(1, uuid.toString());
@@ -65,20 +78,40 @@ public class DatabaseAPI {
                 multiplierPlugin.log(Level.SEVERE, "Failed to add multiplier to player in the database.");
                 exception.printStackTrace();
             }
+
+            // Determine ID.
+            try {
+                Statement statement = connection.createStatement();
+                String query = "SELECT last_insert_rowid();";
+                if(database instanceof MySQL){
+                    query = "SELECT LAST_INSERT_ID();";
+                }
+                ResultSet resultSet = statement.executeQuery(query);
+                while (resultSet.next()) {
+                    int id = resultSet.getInt(0);
+                    scheduler.runTask(multiplierPlugin, () -> {
+                        multiplierPlugin.getMultiplierAPI().updateID(uuid, multiplier, id);
+                    });
+                }
+            } catch (SQLException exception) {
+                multiplierPlugin.log(Level.SEVERE, "Failed to get multiplier ID in the database.");
+                exception.printStackTrace();
+            }
+
             database.closeConnection();
         });
     }
 
     /**
      * (IS RAN ASYNC) Removes a multiplier from the database that is currently being used.
-     * @param multiplier The multiplier that should be removed.
+     * @param id The id of the multiplier that should be removed.
      */
-    public void removeMultiplier(Multiplier multiplier) {
+    public void removeMultiplier(int id) {
         scheduler.runTaskAsynchronously(multiplierPlugin, () -> {
             Connection connection = database.openConnection();
             try {
                 Statement statement = connection.createStatement();
-                String query = "DELETE FROM multipliers WHERE id = " + multiplier.getId() + ";";
+                String query = "DELETE FROM multipliers WHERE id = " + id + ";";
                 statement.executeUpdate(query);
                 statement.close();
             } catch (SQLException exception) {
