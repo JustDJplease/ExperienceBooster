@@ -2,8 +2,10 @@ package me.newt.multiplier;
 
 import me.newt.multiplier.command.BaseCommand;
 import me.newt.multiplier.data.DatabaseAPI;
+import me.newt.multiplier.listener.PlayerJoinListener;
 import me.newt.multiplier.messages.MessagesAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -34,8 +36,11 @@ public class MultiplierPlugin extends JavaPlugin {
         messagesAPI = new MessagesAPI(this);
         new BaseCommand(this);
 
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new PlayerJoinListener(this), this);
+
         // Deprecated, reload support
-        if (Bukkit.getOnlinePlayers().size() > 1) {
+        if (Bukkit.getOnlinePlayers().size() > 0) {
             log(Level.WARNING, "Please do not use the 'reload' command. This may cause issues.");
             log(Level.WARNING, "Reloading is a bad practice. Restart your server instead!");
             Bukkit.getOnlinePlayers().forEach(player -> multiplierAPI.loadMultipliersAsync(player.getUniqueId()));

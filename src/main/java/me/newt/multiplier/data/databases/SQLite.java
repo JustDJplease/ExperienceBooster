@@ -20,11 +20,12 @@ public class SQLite extends Database {
      * @param multiplierPlugin Instance of the main class.
      */
     public SQLite(MultiplierPlugin multiplierPlugin) throws IOException {
-        databaseFile = new File(multiplierPlugin.getDataFolder().getPath() + "data", "userdata.db");
-        if (!databaseFile.exists()) {
-            databaseFile.mkdirs();
-            databaseFile.createNewFile();
+        File databaseFolder = new File(multiplierPlugin.getDataFolder().getPath() + File.separator + "data");
+        if (!databaseFolder.exists()) {
+            databaseFolder.mkdirs();
         }
+        databaseFile = new File(multiplierPlugin.getDataFolder().getPath() + File.separator + "data", "userdata.db");
+        databaseFile.createNewFile();
     }
 
     /**
@@ -64,13 +65,7 @@ public class SQLite extends Database {
         openConnection();
         try {
             Statement statement = connection.createStatement();
-            String query = "CREATE TABLE IF NOT EXISTS multipliers (" +
-                    "'id' INT NOT NULL AUTO_INCREMENT," +
-                    "'uuid' VARCHAR NOT NULL," +
-                    "'type' VARCHAR NOT NULL," +
-                    "'duration' INT NOT NULL," +
-                    "'multiplier' INT NOT NULL," +
-                    "PRIMARY KEY ('id'));";
+            String query = "CREATE TABLE IF NOT EXISTS multipliers ( 'id' INTEGER PRIMARY KEY AUTOINCREMENT, 'uuid' VARCHAR NOT NULL, 'type' VARCHAR NOT NULL, 'duration' INTEGER NOT NULL, 'multiplier' INTEGER NOT NULL );";
             statement.executeUpdate(query);
             statement.close();
         } catch (SQLException exception) {

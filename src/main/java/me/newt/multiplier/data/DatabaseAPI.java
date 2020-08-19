@@ -88,7 +88,7 @@ public class DatabaseAPI {
                 }
                 ResultSet resultSet = statement.executeQuery(query);
                 while (resultSet.next()) {
-                    int id = resultSet.getInt(0);
+                    int id = resultSet.getInt(1);
                     scheduler.runTask(multiplierPlugin, () -> {
                         multiplierPlugin.getMultiplierAPI().updateID(uuid, multiplier, id);
                     });

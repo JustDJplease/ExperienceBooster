@@ -102,7 +102,8 @@ public class MultiplierAPI {
      * End all multipliers currently active.
      */
     public void endAllActiveMultipliers() {
-        activeMultipliers.forEach(this::endActiveMultiplier);
+        List<Multiplier> toStop = new ArrayList<>(activeMultipliers);
+        toStop.forEach(this::endActiveMultiplier);
     }
 
     /**
@@ -110,9 +111,11 @@ public class MultiplierAPI {
      * @param type The type of multiplier to end.
      */
     public void endAllActiveMultipliersOfType(MultiplierType type) {
+        List<Multiplier> toStop = new ArrayList<>();
         activeMultipliers.forEach(multiplier -> {
-            if (multiplier.getType() == type) endActiveMultiplier(multiplier);
+            if (multiplier.getType() == type) toStop.add(multiplier);
         });
+        toStop.forEach(this::endActiveMultiplier);
     }
 
     /**

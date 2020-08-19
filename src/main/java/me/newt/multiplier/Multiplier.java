@@ -91,6 +91,6 @@ public class Multiplier {
      * @return A description of the multiplier.
      */
     public String getMultiplierAsText() {
-        return "§2§l#" + id + " §a" + type.getCapitalizedName() + " §7(§f" + multiplier + "x§7) (§f" + UtilTimeFormat.formatDuration((long) duration) + "§7)";
+        return "§2§l#" + id + " §a" + type.getCapitalizedName() + " §7(§f" + multiplier + "x§7) (§f" + UtilTimeFormat.formatDuration((long) duration*1000) + "§7)";
     }
 }
