@@ -91,46 +91,44 @@ public class BaseCommand implements CommandExecutor {
             return true;
 
         }
-        if (args.length > 2) {
 
-            // Admin Command
-            if (args[0].equalsIgnoreCase("admin")) {
+        // Admin Command
+        if (args[0].equalsIgnoreCase("admin")) {
 
-                // Give Command
-                if (args[1].equalsIgnoreCase("give")) {
-                    giveCMD.run(sender, label, args);
-                    return true;
-                }
+            // Give Command
+            if (args[1].equalsIgnoreCase("give")) {
+                giveCMD.run(sender, label, args);
+                return true;
+            }
 
-                // List Command
-                if (args[1].equalsIgnoreCase("list")) {
-                    listCMD.run(sender, label, args);
-                    return true;
-                }
+            // List Command
+            if (args[1].equalsIgnoreCase("list")) {
+                listCMD.run(sender, label, args);
+                return true;
+            }
 
-                // Remove Command
-                if (args[1].equalsIgnoreCase("remove")) {
-                    removeCMD.run(sender, label, args);
-                    return true;
-                }
+            // Remove Command
+            if (args[1].equalsIgnoreCase("remove")) {
+                removeCMD.run(sender, label, args);
+                return true;
+            }
 
-                // Start Command
-                if (args[1].equalsIgnoreCase("start")) {
-                    startCMD.run(sender, label, args);
-                    return true;
-                }
+            // Start Command
+            if (args[1].equalsIgnoreCase("start")) {
+                startCMD.run(sender, label, args);
+                return true;
+            }
 
-                // Stop Command
-                if (args[1].equalsIgnoreCase("stop")) {
-                    stopCMD.run(sender, label, args);
-                    return true;
-                }
+            // Stop Command
+            if (args[1].equalsIgnoreCase("stop")) {
+                stopCMD.run(sender, label, args);
+                return true;
+            }
 
-                // Reload Command
-                if (args[1].equalsIgnoreCase("reload")) {
-                    reloadCMD.run(sender, label, args);
-                    return true;
-                }
+            // Reload Command
+            if (args[1].equalsIgnoreCase("reload")) {
+                reloadCMD.run(sender, label, args);
+                return true;
             }
         }
 

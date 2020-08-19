@@ -49,6 +49,7 @@ public class ListCommand extends SubCommand {
             return;
         }
 
+        // TODO this does not work for offline players.
         sender.sendMessage("§7Listing multipliers for " + uuid.toString() + " (§f" + unValidatedReceiver + "§7):");
         multiplierPlugin.getMultiplierAPI().getMultipliers(uuid).forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
     }
