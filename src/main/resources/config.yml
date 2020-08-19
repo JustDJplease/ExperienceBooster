@@ -1,91 +1,36 @@
-Boosters:
-   MINECRAFT:
-      # If boosters of this type are available in game, and can be activated.
-      enabled: true
-      # This is the name of this type of booster shown in chat when it is activated.
-      type: "Minecraft"
-      # If people can add a booster to the current active booster,
-      # to add its multiplication factors together.
-      canStack: true
-      # The maximum amount of multiplication achieved by adding together boosters of this type.
-      # The amount that one of these multipliers multiplies. Has to be a whole number.
-      multiplier: 2
-      # People cannot activate boosters that would go over this limit.
-      max-active-multiplier: 10
-      # The time this booster lasts. Adding boosters together will not prolong the time.
-      # Each booster will only last for this time. (Prevents easy abuse of this feature)
-      time: 600
-      # The color of the boss bar. ONLY use colors listed here:
-      # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html 
-      bossbar-color: "GREEN"
-      # The text on the boss bar. Available placeholders:
-      # {current-multiplier} is replaced with the word 'Double, Triple, etc.
-      # {player} is replaced with the name of the player who activated this booster,
-      # and with 'Multiple Players', when there are boosters stacked.
-      # {time} is replaced with the time left on the earliest booster activated.
-      # Once this runs out, this will display the time left on the next booster active of this type.
-      bossbar-message: "&2{current-multiplier} Minecraft XP from &a{player} &7[&f{time}&7]"
-      # Should a hologram display experience gotten when NO booster is active.
-      hologram-when-not-boosted: true
-      # This is the text of that hologram. It supports multiple lines! Available placeholders:
-      # {amount} the amount of experience dropped.
-      hologram-text-when-not-boosted:
-      - '&7[&f+{amount} XP&7]'
-      # Should a hologram display experience gotten when a booster is active.
-      hologram-when-boosted: true
-      # This is the text of that hologram. It supports multiple lines! Available placeholders:
-      # {amount} the amount of experience dropped.
-      # {amount-multiplied} the amount of experience received after it is multiplied.
-      # {multiplier} is replaced with the multiplier active.
-      # {multiplier-name} is replaced with the word 'Double, Triple, etc.
-      hologram-text-when-boosted:
-      - '&2[&a+{amount-multiplied} XP&2]'
-      - '&2[{multiplier-name} Experience]'
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#                    ExperienceBooster Settings                   #
+#                              by Newt                            #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-   SKILLAPI:
-      enabled: true
-      type: "Skills"
-      canStack: true
-      multiplier: 2
-      max-active-multiplier: 10
-      time: 600
-      bossbar-color: "BLUE"
-      bossbar-message: "&3{current-multiplier} Skill XP from &b{player} &7[&f{time}&7]"
-      hologram-when-not-boosted: true
-      hologram-text-when-not-boosted:
-      - '&7[&f+{amount} Skill XP&7]'
-      hologram-when-boosted: true
-      hologram-text-when-boosted:
-      - '&3[&b+{amount-multiplied} Skill XP&3]'
-      - '&3[{multiplier-name} Experience]'
+# Database option that should be used.
+# Options: "MYSQL" (separate server), "SQLITE" (local file).
+database_option: "SQLITE"
 
-   MCMMO:
-      # This booster is disabled by default.
-      enabled: false
-      type: "mcMMO"
-      canStack: true
-      multiplier: 2
-      max-active-multiplier: 10
-      time: 600
-      bossbar-color: "PURPLE"
-      bossbar-message: "&5{current-multiplier} mcMMO XP from &d{player} &7[&f{time}&7]"
+# Credentials of a MYSQL database.
+# Only required when using a MYSQL database.
+database_host: "localhost"
+database_port: "3306"
+database_name: "the_database_name"
+database_username: "username"
+database_password: "password"
 
-   JOBS:
-      # This booster is disabled by default.
-      enabled: false
-      type: "Job"
-      canStack: true
-      multiplier: 2
-      max-active-multiplier: 10
-      time: 600
-      bossbar-color: "YELLOW"
-      bossbar-message: "&6{current-multiplier} Jobs XP from &e{player} &7[&f{time}&7]"
+# Should active multipliers be displayed on the boss-bar?
+# Boss-bars can have custom bar colors. Options: "BLUE", "GREEN", "PINK", "PURPLE", "RED", "WHITE", "YELLOW".
+bossbar_enabled: true
+bossbar_color_minecraft: "GREEN"
+bossbar_color_jobs: "YELLOW"
+bossbar_color_mcmmo: "PURPLE"
 
-# Prevents the use of experience potions when a MINECRAFT booster is active.
-# You should set this to TRUE if your server uses an experience-bottle-filling-plugin!
-Disable-experience-potions-when-booster-active: false
-   
-# You have completed configuring this plugin!
-# You should NOT touch the options below, as this will lead to problems / console spam.
-version: ${version}
-debug: false
+# Should active multipliers be displayed on the action-bar?
+actionbar_enabled: false
+
+# Should this plugin prevent players from throwing experience potions when a minecraft booster is active?
+# You should only enable this if your players can withdraw experience into experience potions.
+patch_experience_potions: false
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#                     Configuration completed!                    #
+#                Do not change the following value                #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+config_version: 1

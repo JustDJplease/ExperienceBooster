@@ -10,6 +10,10 @@
     <version>MC-1.16.1</version>
     <description>Multipliers that boost the experience gained by all online players.</description>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <repositories>
         <!-- Spigot -->
         <repository>
