@@ -28,3 +28,9 @@ actionbar_enabled: false
 # Should this plugin prevent players from throwing experience potions when a minecraft booster is active?
 # You should only enable this if your players can withdraw experience into experience potions.
 patch_experience_potions: false
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#                     Configuration completed!                    #
+#                Do not change the following value                #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+config_version: 1

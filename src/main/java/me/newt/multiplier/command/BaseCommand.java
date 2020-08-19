@@ -4,6 +4,12 @@ import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.command.subcommands.admin.*;
 import me.newt.multiplier.command.subcommands.user.MenuCommand;
 import me.newt.multiplier.command.subcommands.user.ThankCommand;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,14 +18,14 @@ import org.bukkit.entity.Player;
 public class BaseCommand implements CommandExecutor {
 
     private final MultiplierPlugin multiplierPlugin;
-    private final SubCommand userMenuCommand;
-    private final SubCommand userThankCommand;
-    private final SubCommand adminGiveCommand;
-    private final SubCommand adminListCommand;
-    private final SubCommand adminReloadCommand;
-    private final SubCommand adminRemoveCommand;
-    private final SubCommand adminStartCommand;
-    private final SubCommand adminStopCommand;
+    private final SubCommand menuCMD;
+    private final SubCommand thankCMD;
+    private final SubCommand giveCMD;
+    private final SubCommand listCMD;
+    private final SubCommand reloadCMD;
+    private final SubCommand removeCMD;
+    private final SubCommand startCMD;
+    private final SubCommand stopCMD;
 
     /**
      * Constructor.
@@ -29,70 +35,97 @@ public class BaseCommand implements CommandExecutor {
         this.multiplierPlugin = multiplierPlugin;
 
         // User subcommands:
-        this.userMenuCommand = new MenuCommand();
-        this.userThankCommand = new ThankCommand();
+        this.menuCMD = new MenuCommand("multiplier.user.activate");
+        this.thankCMD = new ThankCommand("multiplier.user.thank");
 
         // Admin subcommands:
-        this.adminGiveCommand = new GiveCommand();
-        this.adminListCommand = new ListCommand();
-        this.adminReloadCommand = new ReloadCommand();
-        this.adminRemoveCommand = new RemoveCommand();
-        this.adminStartCommand = new StartCommand();
-        this.adminStopCommand = new StopCommand();
+        this.giveCMD = new GiveCommand("multiplier.admin.give");
+        this.listCMD = new ListCommand("multiplier.admin.list");
+        this.reloadCMD = new ReloadCommand("multiplier.admin.reload");
+        this.removeCMD = new RemoveCommand("multiplier.admin.remove");
+        this.startCMD = new StartCommand("multiplier.admin.start");
+        this.stopCMD = new StopCommand("multiplier.admin.stop");
     }
 
     /**
      * Command handler.
-     * @param commandSender Issuer of the command.
-     * @param command       Executed command.
-     * @param label         Alias of the command used.
-     * @param args          Arguments used with the command.
+     * @param sender  Issuer of the command.
+     * @param command Executed command.
+     * @param label   Alias of the command used.
+     * @param args    Arguments used with the command.
      * @return Whether the command was successfully executed (Always true).
      */
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            if (!(commandSender instanceof Player)) {
-                printHelp(commandSender, label);
+
+            // Menu Command
+            if (!(sender instanceof Player)) {
+                printHelp(sender, label);
                 return true;
             }
-            if (!hasPermission(commandSender, "multiplier.user")) {
-                return true;
-            }
-            commandSender.sendMessage("[TODO] Should open GUI.");
+            menuCMD.run(sender, label, args);
             return true;
+
         }
         if (args.length == 1) {
+
+            // Thank Command
             if (args[0].equalsIgnoreCase("thank")) {
-                commandSender.sendMessage("[TODO] Thank players.");
+                thankCMD.run(sender, label, args);
                 return true;
             }
-            printHelp(commandSender, label);
+
+            // Invalid or Help Command
+            printHelp(sender, label);
             return true;
+
         }
         if (args.length > 2) {
+
+            // Admin Command
             if (args[0].equalsIgnoreCase("admin")) {
+
+                // Give Command
                 if (args[1].equalsIgnoreCase("give")) {
-
+                    giveCMD.run(sender, label, args);
+                    return true;
                 }
+
+                // List Command
                 if (args[1].equalsIgnoreCase("list")) {
-
+                    listCMD.run(sender, label, args);
+                    return true;
                 }
+
+                // Remove Command
                 if (args[1].equalsIgnoreCase("remove")) {
-
+                    removeCMD.run(sender, label, args);
+                    return true;
                 }
+
+                // Start Command
                 if (args[1].equalsIgnoreCase("start")) {
-
+                    startCMD.run(sender, label, args);
+                    return true;
                 }
+
+                // Stop Command
                 if (args[1].equalsIgnoreCase("stop")) {
-
+                    stopCMD.run(sender, label, args);
+                    return true;
                 }
-                if (args[1].equalsIgnoreCase("reload")) {
 
+                // Reload Command
+                if (args[1].equalsIgnoreCase("reload")) {
+                    reloadCMD.run(sender, label, args);
+                    return true;
                 }
             }
         }
-        printHelp(commandSender, label);
+
+        // Invalid Command
+        printHelp(sender, label);
         return true;
     }
 
@@ -113,28 +146,58 @@ public class BaseCommand implements CommandExecutor {
 
     /**
      * Send command help to the issuer of a command.
-     * @param commandSender Issuer of the command.
-     * @param label         Alias of the command used.
+     * @param sender Issuer of the command.
+     * @param label  Alias of the command used.
      */
-    private void printHelp(CommandSender commandSender, String label) {
-        commandSender.sendMessage("[TODO] User commands:");
-        commandSender.sendMessage("/" + label + " - Opens multiplier menu.");
-        commandSender.sendMessage("/" + label + " thank - Thank players for activating multiplier.");
-        commandSender.sendMessage("/" + label + " help - Shows this help menu.");
-        commandSender.sendMessage("[TODO] Admin commands:");
-        commandSender.sendMessage("/" + label + " admin give <player> <type> <duration> <strength> - Give multiplier to player.");
-        commandSender.sendMessage("/" + label + " admin list <player> - List player's multipliers.");
-        commandSender.sendMessage("/" + label + " admin remove <id> - Remove multiplier from player.");
-        commandSender.sendMessage("/" + label + " admin start <type> <duration> <strength> - Start multiplier.");
-        commandSender.sendMessage("/" + label + " admin stop <type> - Stop multiplier.");
-        commandSender.sendMessage("/" + label + " admin reload - Reload configuration files.");
+    private void printHelp(CommandSender sender, String label) {
+        sender.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "---------------------------------------------------------------");
+        if (sender.hasPermission(menuCMD.getPermission()))
+            print(sender, "/" + label, "View and activate your multipliers.");
+        if (sender.hasPermission(thankCMD.getPermission()))
+            print(sender, "/" + label + " thank", "Show your gratitude for a multiplier.");
+        if (sender.hasPermission(listCMD.getPermission()))
+            print(sender, "/" + label + " admin list <player>", "List a player's multipliers.");
+        if (sender.hasPermission(giveCMD.getPermission()))
+            print(sender, "/" + label + " admin give <player> <type> <duration> <strength>", "Give a multiplier.");
+        if (sender.hasPermission(removeCMD.getPermission()))
+            print(sender, "/" + label + " admin remove <id>", "Remove a multiplier.");
+        if (sender.hasPermission(startCMD.getPermission()))
+            print(sender, "/" + label + " admin start <type> <duration> <strength>", "Start a multiplier.");
+        if (sender.hasPermission(stopCMD.getPermission()))
+            print(sender, "/" + label + " admin stop <type>", "Stop active multipliers.");
+        if (sender.hasPermission(reloadCMD.getPermission()))
+            print(sender, "/" + label + " admin reload", "Reload configuration files.");
+        print(sender, "/" + label + " help", "View this list of commands.");
+        sender.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "---------------------------------------------------------------");
     }
 
-    private boolean hasPermission(CommandSender commandSender, String permission) {
-        if (commandSender.hasPermission(permission)) {
-            return true;
+    /**
+     * Send a TextComponent command help message to a CommandSender.
+     * @param sender      Receiver of the message.
+     * @param command     Command that should be described.
+     * @param description Description of the command.
+     */
+    private void print(CommandSender sender, String command, String description) {
+
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(command + " - " + description);
+            return;
         }
-        commandSender.sendMessage("§cYou do not have permission. (Lacking: " + permission + ")");
-        return false;
+
+        Player player = (Player) sender;
+        Text hoverText = new Text(ChatColor.GRAY + "Click to copy this command to your chat.");
+        HoverEvent onHover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText);
+        ClickEvent onClick = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command);
+
+        BaseComponent[] message = new ComponentBuilder(command)
+                .color(ChatColor.GREEN)
+                .event(onHover)
+                .event(onClick)
+                .append(" - ")
+                .color(ChatColor.GRAY)
+                .append(description)
+                .create();
+
+        player.spigot().sendMessage(message);
     }
 }

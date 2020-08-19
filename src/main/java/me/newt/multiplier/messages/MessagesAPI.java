@@ -13,4 +13,17 @@ public class MessagesAPI {
     public MessagesAPI(MultiplierPlugin multiplierPlugin) {
         this.multiplierPlugin = multiplierPlugin;
     }
+
+    public String get(String key) {
+        String message = "TODO get the message here.";
+        return message;
+    }
+
+    public String get(String key, String... placeholders) {
+        String message = get(key);
+        for (int i = 0; i < placeholders.length; i++) {
+            message = message.replace("{" + i + "}", placeholders[i]);
+        }
+        return message;
+    }
 }

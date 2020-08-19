@@ -1,5 +1,6 @@
 package me.newt.multiplier;
 
+import me.newt.multiplier.command.BaseCommand;
 import me.newt.multiplier.data.DatabaseAPI;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +33,7 @@ public class MultiplierPlugin extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        getCommand("multiplier").setExecutor(new BaseCommand(this));
     }
 
     /**
