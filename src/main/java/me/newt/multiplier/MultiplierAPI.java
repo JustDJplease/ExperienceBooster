@@ -1,5 +1,8 @@
 package me.newt.multiplier;
 
+import me.newt.multiplier.messages.MessagesAPI;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.*;
@@ -42,11 +45,16 @@ public class MultiplierAPI {
      * @param uuid       The UUID of the player who should receive the multiplier.
      */
     public void giveMultiplier(Multiplier multiplier, UUID uuid) {
-        List<Multiplier> list = multipliers.get(uuid);
-        list.add(multiplier);
-        multipliers.put(uuid, list);
-        multiplierPlugin.getDatabaseAPI().addMultiplier(uuid, multiplier);
-        // TODO notify the receiver if they are online. (DISPLAY, MESSAGE, SOUNDS ETC)
+        boolean updateId = false;
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null) {
+            List<Multiplier> list = multipliers.get(uuid);
+            list.add(multiplier);
+            multipliers.put(uuid, list);
+            updateId = true;
+            // TODO notify the receiver if they are online. (DISPLAY, MESSAGE, SOUNDS ETC)
+        }
+        multiplierPlugin.getDatabaseAPI().addMultiplier(uuid, multiplier, updateId);
     }
 
     /**
@@ -116,6 +124,24 @@ public class MultiplierAPI {
             if (multiplier.getType() == type) toStop.add(multiplier);
         });
         toStop.forEach(this::endActiveMultiplier);
+    }
+
+    /**
+     * Thank the activators of all active multipliers.
+     */
+    public void thankAll() {
+        MessagesAPI msg = multiplierPlugin.getMessagesAPI();
+        String thankMessage = msg.get("command_thank_receive");
+
+        activeMultipliers.forEach(multiplier -> {
+            UUID activator = multiplier.getActivator();
+            if (activator == null) return;
+
+            Player player = Bukkit.getPlayer(activator);
+            if (player == null) return;
+
+            player.sendMessage(thankMessage);
+        });
     }
 
     /**

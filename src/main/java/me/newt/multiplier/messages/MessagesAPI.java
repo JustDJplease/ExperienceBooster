@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +17,8 @@ import java.util.regex.Pattern;
 public class MessagesAPI {
 
     private final FileConfiguration messagesConfig;
+    public final ChatColor primaryColor = ChatColor.of("#42f58d");
+    public final String fullLine = ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "-----------------------------------------------------";
 
     /**
      * Constructor.
@@ -61,6 +65,42 @@ public class MessagesAPI {
             message = message.replace("{" + i + "}", placeholders[i]);
         }
         return message;
+    }
+
+    /**
+     * Get a formatted list of strings for defined for one message.
+     * @param key Key this list of messages is found under.
+     * @return Coloured and formatted list of messages.
+     */
+    public List<String> getList(String key) {
+        List<String> list = messagesConfig.getStringList(key);
+        for (ListIterator<String> iterator = list.listIterator(); iterator.hasNext(); ) {
+            String sentence = iterator.next();
+            sentence = translateHexColorCodes(sentence);
+            sentence = ChatColor.translateAlternateColorCodes('&', sentence);
+            iterator.set(sentence);
+        }
+        return list;
+    }
+
+    /**
+     * Get a formatted list of strings for defined for one message and replace placeholder values.
+     * @param key          Key this list of messages is found under.
+     * @param placeholders Values to replace.
+     * @return Coloured and formatted list of messages with placeholders replaced.
+     */
+    public List<String> getList(String key, String... placeholders) {
+        List<String> list = messagesConfig.getStringList(key);
+        for (ListIterator<String> iterator = list.listIterator(); iterator.hasNext(); ) {
+            String sentence = iterator.next();
+            sentence = translateHexColorCodes(sentence);
+            sentence = ChatColor.translateAlternateColorCodes('&', sentence);
+            for (int i = 0; i < placeholders.length; i++) {
+                sentence = sentence.replace("{" + i + "}", placeholders[i]);
+            }
+            iterator.set(sentence);
+        }
+        return list;
     }
 
     /**

@@ -1,15 +1,22 @@
 package me.newt.multiplier.command.subcommands.admin;
 
+import me.newt.multiplier.Multiplier;
 import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.command.SubCommand;
+import me.newt.multiplier.messages.MessagesAPI;
 import me.newt.multiplier.util.UtilArgumentParsers;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ListCommand extends SubCommand {
 
     private final MultiplierPlugin multiplierPlugin;
+    private final MessagesAPI msg;
     private final String permission;
 
     /**
@@ -19,6 +26,7 @@ public class ListCommand extends SubCommand {
      */
     public ListCommand(MultiplierPlugin multiplierPlugin, String permission) {
         this.multiplierPlugin = multiplierPlugin;
+        this.msg = multiplierPlugin.getMessagesAPI();
         this.permission = permission;
     }
 
@@ -32,26 +40,60 @@ public class ListCommand extends SubCommand {
     public void run(CommandSender sender, String label, String[] args) {
         // multiplier admin list <player>
 
+        // Right permission?
         if (!sender.hasPermission(permission)) {
-            sender.sendMessage("§cYou do not have permission. (Lacking: " + permission + ")");
+            sender.sendMessage(msg.get("command_no_permission", permission));
             return;
         }
 
+        // Right number of arguments?
         if (args.length != 3) {
-            printInvalidArgs(sender, label);
+            sender.sendMessage(msg.fullLine);
+            sender.sendMessage(msg.get("command_invalid_arguments"));
+            printInvalidArgs(sender);
             return;
         }
 
         String unValidatedReceiver = args[2];
+
+        // Right UUID or player name argument?
         UUID uuid = UtilArgumentParsers.parseUUID(unValidatedReceiver);
         if (uuid == null) {
-            printInvalidArgs(sender, label);
+            sender.sendMessage(msg.fullLine);
+            sender.sendMessage(msg.get("command_invalid_uuid"));
+            printInvalidArgs(sender);
             return;
         }
 
-        // TODO this does not work for offline players.
-        sender.sendMessage("§7Listing multipliers for " + uuid.toString() + " (§f" + unValidatedReceiver + "§7):");
-        multiplierPlugin.getMultiplierAPI().getMultipliers(uuid).forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        String resolvedName = offlinePlayer.getName();
+
+        // Has this player joined before?
+        if (resolvedName == null) {
+            sender.sendMessage(msg.get("command_unknown_player"));
+            resolvedName = uuid.toString();
+        }
+
+        if (offlinePlayer.isOnline()) {
+
+            // Displaying multipliers from memory.
+            sender.sendMessage(msg.get("command_list", resolvedName));
+            List<Multiplier> list = multiplierPlugin.getMultiplierAPI().getMultipliers(uuid);
+            list.forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
+            sender.sendMessage(msg.get("command_list_end", list.size() + ""));
+
+        } else {
+
+            // Displaying multipliers from database.
+            sender.sendMessage(msg.get("command_list", resolvedName));
+            sender.sendMessage(msg.get("command_wait_for_load"));
+            BukkitScheduler scheduler = multiplierPlugin.getServer().getScheduler();
+            scheduler.runTaskAsynchronously(multiplierPlugin, () -> {
+                List<Multiplier> list = multiplierPlugin.getDatabaseAPI().getMultipliers(uuid);
+                list.forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
+                sender.sendMessage(msg.get("command_list_end", list.size() + ""));
+            });
+        }
     }
 
     /**
@@ -66,10 +108,9 @@ public class ListCommand extends SubCommand {
     /**
      * Let the CommandSender know that they've entered invalid arguments.
      * @param sender Issuer of the command.
-     * @param label  Alias of the command used.
      */
-    private void printInvalidArgs(CommandSender sender, String label) {
-        sender.sendMessage("§cInvalid arguments! §4/" + label + " admin list <player>");
-        sender.sendMessage(" §8* §7<player> §f- (Word) Online player or UUID.");
+    private void printInvalidArgs(CommandSender sender) {
+        sender.sendMessage(" §8- §7<§fplayer§7> (§fWord§7) Online player or UUID.");
+        sender.sendMessage(msg.fullLine);
     }
 }

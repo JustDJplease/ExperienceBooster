@@ -87,4 +87,12 @@ public class MultiplierPlugin extends JavaPlugin {
     public void log(Level level, String message) {
         getLogger().log(level, message);
     }
+
+    /**
+     * Reload the language file.
+     */
+    public void reloadLanguage() {
+        messagesAPI = null;
+        messagesAPI = new MessagesAPI(this);
+    }
 }

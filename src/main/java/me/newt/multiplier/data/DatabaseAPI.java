@@ -60,8 +60,9 @@ public class DatabaseAPI {
      * (IS RAN ASYNC) Adds a multiplier to the database that is currently being used.
      * @param uuid       The UUID of the Player who should receive this multiplier.
      * @param multiplier The multiplier that should be added.
+     * @param updateID   If the multiplier ID should be updated in memory afterwards.
      */
-    public void addMultiplier(UUID uuid, Multiplier multiplier) {
+    public void addMultiplier(UUID uuid, Multiplier multiplier, boolean updateID) {
         scheduler.runTaskAsynchronously(multiplierPlugin, () -> {
             Connection connection = database.openConnection();
 
@@ -79,23 +80,25 @@ public class DatabaseAPI {
                 exception.printStackTrace();
             }
 
-            // Determine ID.
-            try {
-                Statement statement = connection.createStatement();
-                String query = "SELECT last_insert_rowid();";
-                if(database instanceof MySQL){
-                    query = "SELECT LAST_INSERT_ID();";
+            if (updateID) {
+                // Determine ID.
+                try {
+                    Statement statement = connection.createStatement();
+                    String query = "SELECT last_insert_rowid();";
+                    if (database instanceof MySQL) {
+                        query = "SELECT LAST_INSERT_ID();";
+                    }
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt(1);
+                        scheduler.runTask(multiplierPlugin, () -> {
+                            multiplierPlugin.getMultiplierAPI().updateID(uuid, multiplier, id);
+                        });
+                    }
+                } catch (SQLException exception) {
+                    multiplierPlugin.log(Level.SEVERE, "Failed to get multiplier ID in the database.");
+                    exception.printStackTrace();
                 }
-                ResultSet resultSet = statement.executeQuery(query);
-                while (resultSet.next()) {
-                    int id = resultSet.getInt(1);
-                    scheduler.runTask(multiplierPlugin, () -> {
-                        multiplierPlugin.getMultiplierAPI().updateID(uuid, multiplier, id);
-                    });
-                }
-            } catch (SQLException exception) {
-                multiplierPlugin.log(Level.SEVERE, "Failed to get multiplier ID in the database.");
-                exception.printStackTrace();
             }
 
             database.closeConnection();

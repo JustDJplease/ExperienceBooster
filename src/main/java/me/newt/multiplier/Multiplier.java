@@ -2,6 +2,8 @@ package me.newt.multiplier;
 
 import me.newt.multiplier.util.UtilTimeFormat;
 
+import java.util.UUID;
+
 public class Multiplier {
 
     /**
@@ -16,6 +18,7 @@ public class Multiplier {
      * Used to keep track of how long this multiplier should last.
      */
     private long timeExpires;
+    private UUID activator;
 
     /**
      * Constructor. (ID of -999 for when the ID has yet to be determined).
@@ -87,10 +90,26 @@ public class Multiplier {
     }
 
     /**
+     * Get who activated this multiplier and should receive the thanking notifications.
+     * @return The UUID of the activating player.
+     */
+    public UUID getActivator() {
+        return activator;
+    }
+
+    /**
+     * Set who activated this multiplier and should receive the thanking notifications.
+     * @param activator The UUID of the activating player.
+     */
+    public void setActivator(UUID activator) {
+        this.activator = activator;
+    }
+
+    /**
      * Get the multiplier's information as text.
      * @return A description of the multiplier.
      */
     public String getMultiplierAsText() {
-        return "§2§l#" + id + " §a" + type.getCapitalizedName() + " §7(§f" + multiplier + "x§7) (§f" + UtilTimeFormat.formatDuration((long) duration*1000) + "§7)";
+        return "§2§l#" + id + " §a" + type.getCapitalizedName() + " §7(§f" + multiplier + "x§7) (§f" + UtilTimeFormat.formatDuration((long) duration * 1000) + "§7)";
     }
 }

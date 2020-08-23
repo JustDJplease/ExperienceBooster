@@ -3,12 +3,14 @@ package me.newt.multiplier.command.subcommands.admin;
 import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.MultiplierType;
 import me.newt.multiplier.command.SubCommand;
+import me.newt.multiplier.messages.MessagesAPI;
 import me.newt.multiplier.util.UtilArgumentParsers;
 import org.bukkit.command.CommandSender;
 
 public class StopCommand extends SubCommand {
 
     private final MultiplierPlugin multiplierPlugin;
+    private final MessagesAPI msg;
     private final String permission;
 
     /**
@@ -18,6 +20,7 @@ public class StopCommand extends SubCommand {
      */
     public StopCommand(MultiplierPlugin multiplierPlugin, String permission) {
         this.multiplierPlugin = multiplierPlugin;
+        this.msg = multiplierPlugin.getMessagesAPI();
         this.permission = permission;
     }
 
@@ -31,25 +34,33 @@ public class StopCommand extends SubCommand {
     public void run(CommandSender sender, String label, String[] args) {
         // multiplier admin stop <type>
 
+        // Right permission?
         if (!sender.hasPermission(permission)) {
-            sender.sendMessage("§cYou do not have permission. (Lacking: " + permission + ")");
+            sender.sendMessage(msg.get("command_no_permission", permission));
             return;
         }
 
+        // Right number of arguments?
         if (args.length != 3) {
-            printInvalidArgs(sender, label);
+            sender.sendMessage(msg.fullLine);
+            sender.sendMessage(msg.get("command_invalid_arguments"));
+            printInvalidArgs(sender);
             return;
         }
 
         String unValidatedType = args[2];
 
+        // Right multiplier type argument?
         MultiplierType type = UtilArgumentParsers.parseType(unValidatedType);
         if (type == null) {
-            printInvalidArgs(sender, label);
+            sender.sendMessage(msg.fullLine);
+            sender.sendMessage(msg.get("command_invalid_type"));
+            printInvalidArgs(sender);
             return;
         }
 
-        sender.sendMessage("§7Stopping all multipliers for §f" + type.getCapitalizedName() + "§7.");
+        // Stopping multiplier(s).
+        sender.sendMessage(msg.get("command_stop", type.getCapitalizedName()));
         multiplierPlugin.getMultiplierAPI().endAllActiveMultipliersOfType(type);
     }
 
@@ -65,10 +76,9 @@ public class StopCommand extends SubCommand {
     /**
      * Let the CommandSender know that they've entered invalid arguments.
      * @param sender Issuer of the command.
-     * @param label  Alias of the command used.
      */
-    private void printInvalidArgs(CommandSender sender, String label) {
-        sender.sendMessage("§cInvalid arguments! §4/" + label + " admin stop <type>");
-        sender.sendMessage(" §8* §7<type> §f- (Word) Multiplier type.");
+    private void printInvalidArgs(CommandSender sender) {
+        sender.sendMessage(" §8- §7<§ftype§7> (§fWord§7) Multiplier type.");
+        sender.sendMessage(msg.fullLine);
     }
 }

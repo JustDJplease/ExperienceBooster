@@ -1,15 +1,19 @@
 package me.newt.multiplier.command.subcommands.user;
 
+import me.newt.multiplier.Multiplier;
 import me.newt.multiplier.MultiplierPlugin;
 import me.newt.multiplier.command.SubCommand;
+import me.newt.multiplier.messages.MessagesAPI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class MenuCommand extends SubCommand {
 
     private final MultiplierPlugin multiplierPlugin;
+    private final MessagesAPI msg;
     private final String permission;
 
     /**
@@ -19,6 +23,7 @@ public class MenuCommand extends SubCommand {
      */
     public MenuCommand(MultiplierPlugin multiplierPlugin, String permission) {
         this.multiplierPlugin = multiplierPlugin;
+        this.msg = multiplierPlugin.getMessagesAPI();
         this.permission = permission;
     }
 
@@ -32,8 +37,9 @@ public class MenuCommand extends SubCommand {
     public void run(CommandSender sender, String label, String[] args) {
         // multiplier
 
+        // Right permission?
         if (!sender.hasPermission(permission)) {
-            sender.sendMessage("§cYou do not have permission. (Lacking: " + permission + ")");
+            sender.sendMessage(msg.get("command_no_permission", permission));
             return;
         }
 
@@ -42,8 +48,12 @@ public class MenuCommand extends SubCommand {
 
         // TODO OPEN GUI
         // TODO THIS IS TEMPORARY:
-        sender.sendMessage("§7Listing multipliers:");
-        multiplierPlugin.getMultiplierAPI().getMultipliers(uuid).forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
+
+        // Displaying multipliers from memory.
+        sender.sendMessage(msg.get("command_list", player.getName()));
+        List<Multiplier> list = multiplierPlugin.getMultiplierAPI().getMultipliers(uuid);
+        list.forEach(multiplier -> sender.sendMessage(multiplier.getMultiplierAsText()));
+        sender.sendMessage(msg.get("command_list_end", list.size() + ""));
     }
 
     /**

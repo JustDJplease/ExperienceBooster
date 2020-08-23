@@ -6,6 +6,7 @@ api-version: 1.16
 authors: [Newt]
 softdepend: [mcMMO, Jobs]
 website: https://github.com/JustDJplease/ExperienceBooster
+prefix: Multiplier
 
 commands:
   multiplier:

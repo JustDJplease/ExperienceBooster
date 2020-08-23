@@ -203,6 +203,7 @@ public class BaseCommand implements CommandExecutor {
                 .event(onClick)
                 .append(" - ")
                 .color(ChatColor.GRAY)
+                .reset()
                 .append(description)
                 .create();
 
