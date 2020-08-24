@@ -2,7 +2,7 @@ package me.newt.multiplier;
 
 import me.newt.multiplier.command.BaseCommand;
 import me.newt.multiplier.data.DatabaseAPI;
-import me.newt.multiplier.listener.PlayerJoinListener;
+import me.newt.multiplier.listener.PlayerConnectionListener;
 import me.newt.multiplier.messages.MessagesAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -37,7 +37,7 @@ public class MultiplierPlugin extends JavaPlugin {
         new BaseCommand(this);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new PlayerJoinListener(this), this);
+        pluginManager.registerEvents(new PlayerConnectionListener(this), this);
 
         // Deprecated, reload support
         if (Bukkit.getOnlinePlayers().size() > 0) {

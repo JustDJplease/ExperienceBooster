@@ -153,6 +153,14 @@ public class MultiplierAPI {
     }
 
     /**
+     * Removes multipliers from a player from memory.
+     * @param uuid UUID of the player who left the game.
+     */
+    public void removeFromMemory(UUID uuid) {
+        multipliers.remove(uuid);
+    }
+
+    /**
      * CALLBACK FUNCTION. For internal use only. Updates a multiplier's ID after it has been added to the database.
      * @param uuid       UUID of the player owning this multiplier.
      * @param multiplier Instance of this multiplier.
