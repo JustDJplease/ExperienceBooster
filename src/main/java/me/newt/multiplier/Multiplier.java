@@ -1,6 +1,13 @@
 package me.newt.multiplier;
 
+import me.newt.multiplier.messages.MessagesAPI;
 import me.newt.multiplier.util.UtilTimeFormat;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 
 import java.util.UUID;
 
@@ -111,5 +118,27 @@ public class Multiplier {
      */
     public String getMultiplierAsText() {
         return "§2§l#" + id + " §a" + type.getCapitalizedName() + " §7(§f" + multiplier + "x§7) (§f" + UtilTimeFormat.formatDuration((long) duration * 1000) + "§7)";
+    }
+
+    /**
+     * Get the multiplier's information as text for in the GUI.
+     * @param msg       Instance of the message api.
+     * @param sessionID Session ID of the player trying to activate.
+     * @return A description of the multiplier.
+     */
+    public BaseComponent[] getMultiplierAsComponent(MessagesAPI msg, String sessionID) {
+        Text hoverText = new Text(msg.get("book_activate"));
+        HoverEvent onHover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText);
+        ClickEvent onClick = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/multiplier run " + sessionID + " " + id);
+
+        ComponentBuilder builder = new ComponentBuilder("* ")
+                .color(ChatColor.DARK_GREEN)
+                .bold(false)
+                .appendLegacy(type.getCapitalizedName() + " multiplier\n(" + multiplier + " x) (" + UtilTimeFormat.formatDuration((long) duration * 1000) + ")\n")
+                .color(ChatColor.DARK_GRAY)
+                .bold(false)
+                .event(onClick)
+                .event(onHover);
+        return builder.create();
     }
 }

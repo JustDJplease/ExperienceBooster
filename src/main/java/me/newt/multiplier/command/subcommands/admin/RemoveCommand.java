@@ -65,7 +65,7 @@ public class RemoveCommand extends SubCommand {
         }
 
         // Removing the multiplier.
-        sender.sendMessage(msg.get("command_invalid_id", id + ""));
+        sender.sendMessage(msg.get("command_remove", id + ""));
         multiplierPlugin.getMultiplierAPI().removeMultiplier(id);
     }
 

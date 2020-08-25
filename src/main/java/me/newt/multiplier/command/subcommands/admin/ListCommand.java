@@ -67,10 +67,11 @@ public class ListCommand extends SubCommand {
 
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
         String resolvedName = offlinePlayer.getName();
+        boolean neverJoined = false;
 
         // Has this player joined before?
         if (resolvedName == null) {
-            sender.sendMessage(msg.get("command_unknown_player"));
+            neverJoined = true;
             resolvedName = uuid.toString();
         }
 
@@ -86,6 +87,7 @@ public class ListCommand extends SubCommand {
 
             // Displaying multipliers from database.
             sender.sendMessage(msg.get("command_list", resolvedName));
+            if (neverJoined) sender.sendMessage(msg.get("command_unknown_player"));
             sender.sendMessage(msg.get("command_wait_for_load"));
             BukkitScheduler scheduler = multiplierPlugin.getServer().getScheduler();
             scheduler.runTaskAsynchronously(multiplierPlugin, () -> {

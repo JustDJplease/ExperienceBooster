@@ -11,6 +11,7 @@ public class MultiplierAPI {
 
     private final MultiplierPlugin multiplierPlugin;
     private final BukkitScheduler scheduler;
+    private final Map<UUID, UUID> sessions;
     private final Map<UUID, List<Multiplier>> multipliers;
     private final List<Multiplier> activeMultipliers;
 
@@ -21,6 +22,7 @@ public class MultiplierAPI {
     public MultiplierAPI(MultiplierPlugin multiplierPlugin) {
         this.multiplierPlugin = multiplierPlugin;
         this.scheduler = multiplierPlugin.getServer().getScheduler();
+        this.sessions = new HashMap<>();
         this.multipliers = new HashMap<>();
         this.activeMultipliers = new ArrayList<>();
     }
@@ -149,6 +151,7 @@ public class MultiplierAPI {
      * @param uuid UUID of the player.
      */
     public void loadMultipliersAsync(UUID uuid) {
+        sessions.put(uuid, UUID.randomUUID());
         scheduler.runTaskAsynchronously(multiplierPlugin, () -> multipliers.put(uuid, multiplierPlugin.getDatabaseAPI().getMultipliers(uuid)));
     }
 
@@ -157,6 +160,7 @@ public class MultiplierAPI {
      * @param uuid UUID of the player who left the game.
      */
     public void removeFromMemory(UUID uuid) {
+        sessions.remove(uuid);
         multipliers.remove(uuid);
     }
 
@@ -172,5 +176,14 @@ public class MultiplierAPI {
         multiplier.setId(id);
         list.add(multiplier);
         multipliers.put(uuid, list);
+    }
+
+    /**
+     * For internal use only. Get the session ID of a player.
+     * @param uuid UUID of the player.
+     * @return Session ID of the player.
+     */
+    public UUID getSessionID(UUID uuid) {
+        return sessions.get(uuid);
     }
 }

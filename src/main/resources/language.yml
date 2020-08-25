@@ -61,6 +61,15 @@ command_description_reload: "Reload configuration files."
 command_description_help: "View this list of commands."
 command_copy_command: "&7Click to copy this command to your chat."
 
+# Multiplier activation book.
+# Warning: Please do not add long messages and text here! It may break the book!
+book_title: "<#42f58d>&lMultipliers:"
+book_description: "&8Activate your experience boosters by clicking them in this list."
+book_header: "<#42f58d>&lOwned multipliers:"
+book_next_page: "&8&oMore on the next page!"
+book_no_multipliers: "&8You own no multipliers :("
+book_activate: "&7Click to activate this multiplier."
+
 #multiplier_activated: "&2{0} &ahas activated a &2{1}&a multiplier!"
 #multiplier_thank_click: "&a&lGrateful? Click here to thank them!"
 
